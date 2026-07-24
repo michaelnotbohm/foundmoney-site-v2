@@ -269,6 +269,34 @@ export interface TabbedPanelsContent {
   panels: TabbedPanel[]
 }
 
+// ── Scan reveal ──────────────────────────────────────────────────────────────
+//
+// Columns that light up in sequence as the section scrolls into view, with a
+// running tally of the items revealed. Reads as an audit finding things.
+//
+// ink and tint are per-column accent colours. They are deliberately content
+// rather than theme tokens: the point is a visual distinction between columns,
+// and the right palette for that depends on the copy, not the brand.
+
+export interface ScanColumn {
+  label: string
+  headline?: string
+  items: string[]
+  /** Accent colour for the rule, eyebrow, and tick. */
+  ink?: string
+  /** Background wash behind each revealed item. */
+  tint?: string
+}
+
+export interface ScanRevealContent {
+  eyebrow?: string
+  heading?: string
+  /** Sits beside the running count, e.g. "sources of unclaimed revenue". */
+  tallyLabel?: string
+  replayLabel?: string
+  columns: ScanColumn[]
+}
+
 // ── Two column (layout primitive) ────────────────────────────────────────────
 //
 // Renders two CHILD BLOCKS side by side, each resolved through the shared
