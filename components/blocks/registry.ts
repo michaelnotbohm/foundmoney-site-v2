@@ -60,6 +60,9 @@ const ProcessTimelineBlock = dynamic(() =>
 const TabbedPanelsBlock = dynamic(() =>
   import('./tabbed-panels-block').then((m) => m.TabbedPanelsBlock),
 )
+const ScanRevealBlock = dynamic(() =>
+  import('./scan-reveal-block').then((m) => m.ScanRevealBlock),
+)
 const TwoColumnBlock = dynamic(() =>
   import('./two-column-block').then((m) => m.TwoColumnBlock),
 )
@@ -74,6 +77,10 @@ export type AnyBlockComponent = React.ComponentType<BlockProps<any>>
  * near-duplicate blocks (stats/stat_strip, testimonial/testimonials,
  * image_text/scroll_reveal). Keeping the aliases means previously seeded
  * sections keep rendering; prefer the canonical name for anything new.
+ *
+ * Note scan_reveal and scroll_reveal are DIFFERENT blocks one letter apart.
+ * scan_reveal is the sequential column audit; scroll_reveal is an alias for
+ * media_text with its reveal flag set.
  */
 const registry: Record<string, AnyBlockComponent> = {
   hero: HeroBlock as AnyBlockComponent,
@@ -88,6 +95,7 @@ const registry: Record<string, AnyBlockComponent> = {
   image: ImageBlock as AnyBlockComponent,
   lead_form: LeadFormBlock as AnyBlockComponent,
   tabbed_panels: TabbedPanelsBlock as AnyBlockComponent,
+  scan_reveal: ScanRevealBlock as AnyBlockComponent,
   two_column: TwoColumnBlock as AnyBlockComponent,
 
   // Canonical + aliases
