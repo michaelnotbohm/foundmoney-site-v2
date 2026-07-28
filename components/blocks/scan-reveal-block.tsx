@@ -13,6 +13,9 @@ import type { BlockProps, ScanRevealContent } from './types'
 // for any three-part diagnostic — sources of unclaimed revenue, stages of a
 // process, categories of risk.
 //
+// The replay button only renders when `replayLabel` is set in section content.
+// Omit the key to remove the button entirely.
+//
 // Respects prefers-reduced-motion by rendering the finished state immediately
 // rather than animating.
 // =============================================================================
@@ -112,15 +115,17 @@ export function ScanRevealBlock({
             <span className="scan-num">{count}</span>
             {tallyLabel && <span className="scan-tally-label">{tallyLabel}</span>}
           </div>
-          <button
-            type="button"
-            className="scan-replay"
-            onClick={sweep}
-            disabled={running}
-            aria-label="Replay the sequence"
-          >
-            {running ? 'Scanning…' : (replayLabel ?? 'Run again')}
-          </button>
+          {replayLabel && (
+            <button
+              type="button"
+              className="scan-replay"
+              onClick={sweep}
+              disabled={running}
+              aria-label="Replay the sequence"
+            >
+              {running ? 'Scanning…' : replayLabel}
+            </button>
+          )}
         </div>
       </div>
 
