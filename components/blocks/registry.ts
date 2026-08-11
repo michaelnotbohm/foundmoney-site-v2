@@ -32,6 +32,9 @@ const RichTextBlock = dynamic(() =>
 const FeatureGridBlock = dynamic(() =>
   import('./feature-grid-block').then((m) => m.FeatureGridBlock),
 )
+const FeatureIndexBlock = dynamic(() =>
+  import('./feature-index').then((m) => m.FeatureIndexBlock),
+)
 const FaqBlock = dynamic(() => import('./faq-block').then((m) => m.FaqBlock))
 const LeadFormBlock = dynamic(() =>
   import('./lead-form-block').then((m) => m.LeadFormBlock),
@@ -88,6 +91,7 @@ const registry: Record<string, AnyBlockComponent> = {
   cta_band: CtaBandBlock as AnyBlockComponent,
   faq: FaqBlock as AnyBlockComponent,
   feature_grid: FeatureGridBlock as AnyBlockComponent,
+  feature_index: FeatureIndexBlock as AnyBlockComponent,
   path_cards: PathCardsBlock as AnyBlockComponent,
   process_timeline: ProcessTimelineBlock as AnyBlockComponent,
   quick_facts: QuickFactsBlock as AnyBlockComponent,
