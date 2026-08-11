@@ -8,10 +8,11 @@
  * the row to reveal the body copy, draws a gold rule across the width,
  * and warms the background to the surface tone.
  *
- * Register as: ("feature_grid", "index") -> FeatureIndex
+ * Registered as block type: feature_index -> FeatureIndexBlock
+ * (This registry maps type -> component; variants resolve inside components.)
  *
- * Content shape (identical to the existing feature_grid cards variant,
- * so switching a section is a variant flip — no content migration):
+ * Content shape (identical to feature_grid, so sections switch by
+ * changing their type — no content migration):
  * {
  *   heading?: string,
  *   intro?: string,
@@ -48,7 +49,7 @@ const tokens = {
   fontHeading: "var(--font-heading, 'Fraunces', serif)",
 };
 
-export default function FeatureIndex({
+export function FeatureIndexBlock({
   content,
 }: {
   content: FeatureIndexContent;
