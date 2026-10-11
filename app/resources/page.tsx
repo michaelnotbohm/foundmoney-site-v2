@@ -75,7 +75,7 @@ export default async function ResourcesPage() {
               <ResourcesPostGrid posts={posts} />
             ) : (
               <p className="text-[var(--color-muted)]">
-                No articles yet — check back soon.
+                No articles yet - check back soon.
               </p>
             )}
           </div>

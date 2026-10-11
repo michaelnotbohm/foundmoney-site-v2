@@ -61,6 +61,11 @@ export interface PathCard {
   description?: string
   href: string
   image?: string
+  /**
+   * CSS object-position for the image crop, e.g. '50% 10%' to keep the top
+   * of a portrait in frame. Defaults to centered.
+   */
+  imagePosition?: string
 }
 
 export interface PathCardsContent {
