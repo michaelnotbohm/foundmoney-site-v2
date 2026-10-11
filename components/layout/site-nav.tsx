@@ -78,7 +78,20 @@ export function SiteNav({ site, navLinks, cta, centered = false }: SiteNavProps)
           priority
         />
       ) : (
-        <span className="font-[var(--font-heading)] text-xl font-bold tracking-tight text-[var(--color-foreground)]">
+        <span
+          className="flex items-center gap-2.5 text-[22px] font-semibold text-[var(--color-secondary)]"
+          style={{
+            fontFamily: 'var(--font-heading)',
+            fontVariationSettings: "'opsz' 144",
+            letterSpacing: '-0.02em',
+          }}
+        >
+          {/* Placeholder mark until a logo exists: primary disc, accent ring. */}
+          <span
+            aria-hidden="true"
+            className="inline-block h-7 w-7 shrink-0 rounded-full bg-[var(--color-primary)]"
+            style={{ boxShadow: 'inset 0 0 0 6px var(--color-accent)' }}
+          />
           {site.name}
         </span>
       )}
@@ -86,7 +99,7 @@ export function SiteNav({ site, navLinks, cta, centered = false }: SiteNavProps)
   )
 
   const desktopLinks = (
-    <div className="hidden md:flex md:items-center md:gap-1">
+    <div className="hidden md:flex md:items-center md:gap-6 lg:gap-8">
       {links.map((link) => (
         <NavItem
           key={link.href}
@@ -102,14 +115,13 @@ export function SiteNav({ site, navLinks, cta, centered = false }: SiteNavProps)
   const desktopCta = (
     <div className="hidden md:flex md:items-center md:gap-3">
       {primaryCta && (
-        <Button
-          size="sm"
-          className="bg-[var(--color-primary)] px-6 text-[var(--color-primary-foreground)] hover:bg-[var(--color-primary)]/90"
+        <Link
+          href={primaryCta.href}
+          className="inline-flex h-[46px] items-center whitespace-nowrap bg-[var(--color-primary)] px-[22px] text-[15px] font-semibold text-[var(--color-primary-foreground)] transition-[transform,background-color] duration-200 hover:-translate-y-px hover:bg-[var(--color-secondary)]"
           style={{ borderRadius: 'var(--radius-button)' }}
-          asChild
         >
-          <Link href={primaryCta.href}>{primaryCta.label}</Link>
-        </Button>
+          {primaryCta.label}
+        </Link>
       )}
     </div>
   )
@@ -155,15 +167,13 @@ export function SiteNav({ site, navLinks, cta, centered = false }: SiteNavProps)
   return (
     <header
       className={cn(
-        'sticky top-0 z-40 transition-all duration-300',
-        scrolled
-          ? 'bg-[var(--color-background)]/95 shadow-sm backdrop-blur-md'
-          : 'bg-transparent',
+        'sticky top-0 z-40 border-b border-[var(--color-foreground)]/[0.08] bg-[var(--color-background)]/[0.88] backdrop-blur-md transition-shadow duration-300',
+        scrolled && 'shadow-sm',
       )}
     >
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <nav className="mx-auto max-w-[1240px] px-5 md:px-10">
         {centered ? (
-          <div className="grid h-20 grid-cols-[1fr_auto_1fr] items-center">
+          <div className="grid h-[76px] grid-cols-[1fr_auto_1fr] items-center gap-6">
             <div className="justify-self-start">{logo}</div>
             <div className="justify-self-center">{desktopLinks}</div>
             <div className="flex items-center justify-self-end">
@@ -172,7 +182,7 @@ export function SiteNav({ site, navLinks, cta, centered = false }: SiteNavProps)
             </div>
           </div>
         ) : (
-          <div className="flex h-20 items-center justify-between">
+          <div className="flex h-[76px] items-center justify-between gap-6">
             {logo}
             {desktopLinks}
             <div className="flex items-center">
@@ -205,10 +215,10 @@ function NavItem({
       <Link
         href={link.href}
         className={cn(
-          'rounded-md px-3 py-2 text-sm font-medium transition-colors',
+          'py-2 text-[15px] font-medium transition-colors hover:text-[var(--color-accent-deep)]',
           pathname === link.href
-            ? 'text-[var(--color-foreground)]'
-            : 'text-[var(--color-muted)] hover:bg-[var(--color-muted)]/10 hover:text-[var(--color-foreground)]',
+            ? 'text-[var(--color-accent-deep)]'
+            : 'text-[var(--color-foreground)]',
         )}
       >
         {link.label}
@@ -225,9 +235,8 @@ function NavItem({
       <Link
         href={link.href}
         className={cn(
-          'flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors',
-          'text-[var(--color-muted)] hover:bg-[var(--color-muted)]/10 hover:text-[var(--color-foreground)]',
-          pathname.startsWith(link.href) && 'text-[var(--color-foreground)]',
+          'flex items-center gap-1 py-2 text-[15px] font-medium text-[var(--color-foreground)] transition-colors hover:text-[var(--color-accent-deep)]',
+          pathname.startsWith(link.href) && 'text-[var(--color-accent-deep)]',
         )}
       >
         {link.label}
