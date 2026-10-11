@@ -24,7 +24,7 @@ export function PathCardsBlock({
   )
 
   const cardLink = (
-    <span className="inline-flex items-center text-sm font-semibold text-[var(--color-accent)] group-hover:underline">
+    <span className="inline-flex items-center text-sm font-semibold text-[var(--color-accent-deep)] group-hover:underline">
       {ctaLabel}
       <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
     </span>

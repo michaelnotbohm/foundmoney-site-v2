@@ -182,7 +182,8 @@ export function ScanRevealBlock({
               margin-bottom: clamp(2rem, 4vw, 3rem);
             }
             .scan-eyebrow-top {
-              margin: 0 0 .8rem; font-size: .78rem; letter-spacing: .18em;
+              margin: 0 0 .8rem; font-family: var(--font-mono), ui-monospace, monospace;
+              font-size: .75rem; font-weight: 500; letter-spacing: .18em;
               text-transform: uppercase; color: var(--color-muted);
             }
             .scan-title {
@@ -240,6 +241,7 @@ export function ScanRevealBlock({
             .scan-col[data-on="true"] .scan-bar { width: 100%; }
             .scan-eyebrow {
               display: flex; align-items: baseline; gap: .6rem; margin: 0 0 .5rem;
+              font-family: var(--font-mono), ui-monospace, monospace;
               font-size: .75rem; letter-spacing: .18em; text-transform: uppercase;
               color: var(--color-muted); transition: color .5s ease;
             }

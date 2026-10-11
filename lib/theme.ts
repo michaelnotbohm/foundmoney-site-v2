@@ -7,13 +7,16 @@
 import type { SiteTheme } from '@/lib/types/database'
 import type React from 'react'
 
-const TOKEN_MAP: Record<keyof SiteTheme, string> = {
+type ThemeToken = Exclude<keyof SiteTheme, 'draft'>
+
+const TOKEN_MAP: Record<ThemeToken, string> = {
   primary:             '--color-primary',
   primaryForeground:   '--color-primary-foreground',
   secondary:           '--color-secondary',
   secondaryForeground: '--color-secondary-foreground',
   accent:              '--color-accent',
   accentForeground:    '--color-accent-foreground',
+  accentDeep:          '--color-accent-deep',
   background:          '--color-background',
   surface:             '--color-surface',
   foreground:          '--color-foreground',
@@ -27,25 +30,40 @@ const TOKEN_MAP: Record<keyof SiteTheme, string> = {
 }
 
 /**
+ * The tokens this deployment should render: theme.draft layered over the live
+ * tokens everywhere except Vercel production (VERCEL_ENV is 'preview' on
+ * preview deployments and unset locally).
+ */
+export function resolveTheme(theme: SiteTheme): Omit<SiteTheme, 'draft'> {
+  const { draft, ...live } = theme
+  if (!draft || process.env.VERCEL_ENV === 'production') return live
+  return { ...live, ...draft }
+}
+
+/**
  * Build the inline style object injected by ThemeWrapper.
  *
  * radiusButton falls back to radius when unset, so a site that wants uniform
  * corners sets one token and a site that wants pill buttons with square cards
- * sets both.
+ * sets both. accentDeep falls back to accent the same way.
  */
 export function getThemeStyleObject(theme: SiteTheme): React.CSSProperties {
+  const resolved = resolveTheme(theme)
   const styles: Record<string, string> = {}
 
   for (const [key, cssVar] of Object.entries(TOKEN_MAP) as [
-    keyof SiteTheme,
+    ThemeToken,
     string,
   ][]) {
-    const value = theme[key]
+    const value = resolved[key]
     if (value) styles[cssVar] = value
   }
 
   if (!styles['--radius-button'] && styles['--radius']) {
     styles['--radius-button'] = styles['--radius']
+  }
+  if (!styles['--color-accent-deep'] && styles['--color-accent']) {
+    styles['--color-accent-deep'] = styles['--color-accent']
   }
 
   return styles as React.CSSProperties

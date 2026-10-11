@@ -21,6 +21,8 @@ export interface SiteTheme {
   secondaryForeground?: string
   accent?: string
   accentForeground?: string
+  /** Darker accent for text, numerals, and icons on light grounds. Falls back to accent. */
+  accentDeep?: string
   background?: string
   surface?: string
   foreground?: string
@@ -31,6 +33,13 @@ export interface SiteTheme {
   fontBody?: string
   radius?: string
   radiusButton?: string
+  /**
+   * Staged tokens, applied over the live ones on every deployment except
+   * Vercel production. Lets a redesign be reviewed on a preview URL against
+   * the shared database without changing the live site. Promote by merging
+   * draft into the top level and removing the key.
+   */
+  draft?: Omit<SiteTheme, 'draft'>
 }
 
 // ── Navigation ───────────────────────────────────────────────────────────────

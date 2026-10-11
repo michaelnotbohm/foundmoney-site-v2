@@ -156,7 +156,7 @@ export function HeroBlock({
     eyebrow && (
       <p
         className={cn(
-          'mb-4 text-xs font-semibold uppercase tracking-[0.18em]',
+          'mb-4 font-mono text-xs font-medium uppercase tracking-[0.18em]',
           onDark ? 'text-white/70' : 'text-[var(--color-muted)]',
         )}
       >

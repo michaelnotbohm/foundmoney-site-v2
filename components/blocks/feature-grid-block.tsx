@@ -91,7 +91,7 @@ export function FeatureGridBlock({
                 <div key={index} className="flex flex-col">
                   <div className="mb-3 flex items-center gap-3">
                     {Icon && (
-                      <Icon className="h-6 w-6 shrink-0 text-[var(--color-accent)]" />
+                      <Icon className="h-6 w-6 shrink-0 text-[var(--color-accent-deep)]" />
                     )}
                     <h3 className="font-[var(--font-heading)] text-lg font-bold text-[var(--color-secondary)]">
                       {item.title}

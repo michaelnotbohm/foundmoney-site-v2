@@ -29,7 +29,7 @@ export function StatStripBlock({
     <div className="mx-auto mb-12 max-w-2xl text-center">
       {eyebrow && (
         <p
-          className={`mb-3 text-sm font-semibold uppercase tracking-[0.2em] ${
+          className={`mb-3 font-mono text-xs font-medium uppercase tracking-[0.18em] ${
             asCards
               ? 'text-[var(--color-primary)]'
               : 'text-[var(--color-secondary-foreground)]/60'
