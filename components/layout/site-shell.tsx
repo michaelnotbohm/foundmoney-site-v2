@@ -8,13 +8,17 @@ import type { SiteSettings } from '@/lib/types/database'
 import { ThemeWrapper } from '@/components/theme-wrapper'
 import { SiteNav } from '@/components/layout/site-nav'
 import { SiteFooter } from '@/components/layout/site-footer'
+import { resolveTheme } from '@/lib/theme'
 
 interface SiteShellProps {
   site: SiteSettings
   children: React.ReactNode
   /** Centre the nav links in their own grid column. */
   centeredNav?: boolean
-  /** Bordered inset frame. Set false for a full-bleed edge-to-edge layout. */
+  /**
+   * Bordered inset frame. Defaults to the theme's `frame` token ('inset'
+   * unless set to 'none'), so it can be staged in theme.draft like any token.
+   */
   framed?: boolean
 }
 
@@ -22,7 +26,7 @@ export function SiteShell({
   site,
   children,
   centeredNav = false,
-  framed = true,
+  framed = resolveTheme(site.theme).frame !== 'none',
 }: SiteShellProps) {
   const inner = (
     <>

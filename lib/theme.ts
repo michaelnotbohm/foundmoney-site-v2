@@ -8,7 +8,8 @@ import type { SiteTheme } from '@/lib/types/database'
 import { showDrafts } from '@/lib/draft'
 import type React from 'react'
 
-type ThemeToken = Exclude<keyof SiteTheme, 'draft'>
+/** Theme keys that become CSS variables (draft and frame are not tokens). */
+type ThemeToken = Exclude<keyof SiteTheme, 'draft' | 'frame'>
 
 const TOKEN_MAP: Record<ThemeToken, string> = {
   primary:             '--color-primary',
