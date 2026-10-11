@@ -73,7 +73,7 @@ export function MediaTextBlock({
   const media = image ? (
     <div
       className={cn(
-        'relative aspect-[4/3] overflow-hidden bg-[var(--color-surface)]',
+        'relative aspect-[4/3] overflow-hidden bg-[var(--color-surface)] lg:sticky lg:top-28',
         reveal && 'transition-all duration-700 delay-150',
         reveal && (isVisible ? 'translate-x-0 opacity-100' : 'opacity-0'),
         reveal && !isVisible && (isRight ? 'translate-x-8' : '-translate-x-8'),
@@ -153,7 +153,7 @@ export function MediaTextBlock({
   const grid = (
     <div
       ref={ref}
-      className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16"
+      className="grid items-start gap-8 lg:grid-cols-2 lg:gap-16"
     >
       {media}
       {copy}
@@ -163,7 +163,9 @@ export function MediaTextBlock({
   if (embedded) return <div className="w-full">{grid}</div>
 
   return (
-    <section className="overflow-hidden py-16 lg:py-24">
+    // overflow-x-clip, not overflow-hidden: hidden makes the section a scroll
+    // container, which stops the sticky image from sticking.
+    <section className="overflow-x-clip py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{grid}</div>
     </section>
   )

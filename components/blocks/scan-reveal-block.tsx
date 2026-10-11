@@ -196,9 +196,11 @@ export function ScanRevealBlock({
               display: flex; align-items: baseline; gap: .6rem; white-space: nowrap;
             }
             .scan-num {
-              font-family: var(--font-heading), Georgia, serif;
+              /* Mono, not the display serif: Fraunces' optical sizing draws
+                 the 8 top-heavy at this size and it reads as upside down. */
+              font-family: var(--font-mono), ui-monospace, monospace;
               font-size: clamp(2.4rem, 5vw, 3.4rem); font-weight: 600;
-              letter-spacing: -.03em; line-height: 1;
+              letter-spacing: -.02em; line-height: 1;
               font-variant-numeric: tabular-nums;
               color: var(--color-secondary);
             }

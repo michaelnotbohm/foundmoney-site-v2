@@ -69,7 +69,12 @@ Decisions for Michael/Anthony (don't block on them — default in parentheses):
 
 - `Found-Money-Partnerships-Sample-Successes.pdf` → read it, pull 3–6 concrete results, and populate `/case-studies` (currently "Coming soon") with a `testimonials` or `quick_facts` block. Anthony said partners will add more and "we can select some of the best ones" — ship with what's in the PDF, mark the page for a second pass.
 - "As seen on" strip: Anthony will send podcast links; design a small logo/screenshot row (`stat_strip`-style or a new `logo_strip` block) placed on home under the hero or above "Meet the partners". Placeholder until links arrive; don't scrape the Google search URLs he sent.
-- Stage photos (3 PNGs): use on Anthony's `/team/anthony-simonie` page (media_text image or an `image` block gallery) and one as the About page hero/background candidate. Upload to `Public` bucket with lowercase, hyphenated names.
+- Stage photos (3 PNGs) - **uploaded 2026-10-11** to the `Public` bucket under `team/`:
+  - `https://yuxwipofzxcqgtchoodz.supabase.co/storage/v1/object/public/Public/team/dynamic-keynote-speaker-on-blue-lit-stage.png`
+  - `https://yuxwipofzxcqgtchoodz.supabase.co/storage/v1/object/public/Public/team/conference-speaker-on-branded-stage-1.png`
+  - `https://yuxwipofzxcqgtchoodz.supabase.co/storage/v1/object/public/Public/team/blue-lit-stage-meet-and-greet.png`
+
+  Use on Anthony's `/team/anthony-simonie` page (swap the `media_text` image `5a7de0e0-…` to the keynote shot, or add an `image` block gallery below the bio) and consider one as the About page image. They are 1.7-2.3 MB PNGs; `next/image` will optimize on the fly, but converting to JPEG/WebP and re-uploading under new names is worth doing before launch.
 
 ## Phase 5 — Optional code work (only if time allows before launch)
 
