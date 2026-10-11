@@ -1,78 +1,69 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import type { BlockProps, CtaBandContent } from './types'
 
 /**
- * Full-width conversion strip. The layered gradients derive entirely from
- * theme tokens, so the same markup reads as a navy lender band or a sage
- * advisory band depending on site_settings.theme.
+ * Full-bleed closing band: dark secondary ground with grain and a soft
+ * radial glow in the accent colour, a large display headline, one accent
+ * pill, and an optional mono reassurance line. Every colour is a theme token,
+ * so the same band reads as brass-on-evergreen here and something else on
+ * another client's palette.
  */
 export function CtaBandBlock({ content }: BlockProps<CtaBandContent>) {
-  const { headline, subhead, cta } = content
+  const { eyebrow, headline, subhead, cta, note } = content
 
   if (!headline || !cta) return null
 
   return (
-    <section className="bg-[var(--color-background)] px-4 py-12 md:py-16">
-      <div className="container mx-auto">
-        <div
-          className="relative mx-auto max-w-5xl overflow-hidden shadow-xl shadow-black/10"
-          style={{ borderRadius: 'calc(var(--radius) * 3)' }}
+    <section className="grain relative overflow-hidden bg-[var(--color-secondary)] text-[var(--color-secondary-foreground)]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[900px] w-[900px] rounded-full"
+        style={{
+          transform: 'translate(-50%, -40%)',
+          background:
+            'radial-gradient(circle, color-mix(in srgb, var(--color-accent) 22%, transparent) 0%, transparent 60%)',
+        }}
+      />
+
+      <div className="mx-auto flex max-w-[1240px] flex-col items-center gap-7 px-5 py-24 text-center md:px-10 md:py-32">
+        {eyebrow && (
+          <p className="m-0 font-mono text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-accent)]">
+            {eyebrow}
+          </p>
+        )}
+
+        <h2
+          className="m-0 max-w-[16ch] text-[clamp(2.5rem,6vw,4.25rem)] font-medium leading-[0.98]"
+          style={{ fontVariationSettings: "'opsz' 144", letterSpacing: '-0.02em' }}
         >
-          {/* Base gradient */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                'linear-gradient(135deg, var(--color-secondary) 0%, color-mix(in srgb, var(--color-secondary) 78%, black) 100%)',
-            }}
-          />
-          {/* Radial accent glow, upper right */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                'radial-gradient(110% 120% at 88% 12%, color-mix(in srgb, var(--color-primary) 55%, transparent) 0%, transparent 58%)',
-            }}
-          />
-          {/* Faint grid texture */}
-          <div
-            className="absolute inset-0 opacity-[0.06]"
-            style={{
-              backgroundImage:
-                'linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)',
-              backgroundSize: '40px 40px',
-            }}
-          />
-          {/* Accent top rule */}
-          <div className="absolute left-0 top-0 h-1 w-full bg-[var(--color-accent)]" />
+          {headline}
+        </h2>
 
-          <div className="relative z-10 flex flex-col items-center gap-7 px-6 py-14 text-center md:px-12 md:py-16">
-            <div className="max-w-2xl">
-              <h2 className="font-[var(--font-heading)] text-3xl font-bold tracking-tight text-[var(--color-secondary-foreground)] md:text-4xl lg:text-5xl">
-                {headline}
-              </h2>
-              {subhead && (
-                <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-[var(--color-secondary-foreground)]/75 md:text-lg">
-                  {subhead}
-                </p>
-              )}
-            </div>
+        {subhead && (
+          <p className="m-0 max-w-[54ch] text-[17px] leading-relaxed text-[var(--color-secondary-foreground)]/75 md:text-lg">
+            {subhead}
+          </p>
+        )}
 
-            <Button
-              asChild
-              size="lg"
-              className="group h-auto bg-[var(--color-accent)] px-8 py-3.5 text-base font-semibold text-[var(--color-accent-foreground)] shadow-lg shadow-black/20 transition-all hover:bg-[var(--color-accent)]/90 hover:shadow-xl"
-              style={{ borderRadius: 'var(--radius-button)' }}
-            >
-              <Link href={cta.href}>
-                {cta.label}
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
-          </div>
-        </div>
+        <Link
+          href={cta.href}
+          className="group inline-flex min-h-[60px] max-w-full items-center justify-center gap-2.5 px-[34px] py-3 text-center md:whitespace-nowrap text-[17px] font-semibold text-[var(--color-accent-foreground)] transition-[transform,box-shadow] duration-200 hover:-translate-y-px"
+          style={{
+            background: 'var(--color-accent)',
+            borderRadius: 'var(--radius-button)',
+            boxShadow: '0 10px 30px color-mix(in srgb, var(--color-accent) 25%, transparent)',
+          }}
+        >
+          {cta.label}
+          <ArrowRight className="h-[18px] w-[18px] transition-transform group-hover:translate-x-1" />
+        </Link>
+
+        {note && (
+          <p className="m-0 font-mono text-[12.5px] tracking-[0.06em] text-[var(--color-secondary-foreground)]/50">
+            {note}
+          </p>
+        )}
       </div>
     </section>
   )

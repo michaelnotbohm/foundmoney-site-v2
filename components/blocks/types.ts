@@ -192,9 +192,13 @@ export interface LeadFormContent {
 // ── CTA band ─────────────────────────────────────────────────────────────────
 
 export interface CtaBandContent {
+  /** Small mono label above the headline. */
+  eyebrow?: string
   headline: string
   subhead?: string
   cta: CtaLink
+  /** Mono reassurance line under the button, e.g. '30 minutes · Direct with a founder'. */
+  note?: string
 }
 
 // ── Team grid ────────────────────────────────────────────────────────────────
