@@ -146,6 +146,9 @@ export function WaveRibbonBackground({
     const drawFrame = (time: number) => {
       const t = time * speed
 
+      // Clear first so a 'transparent' background lets the section show
+      // through instead of accumulating trails.
+      ctx.clearRect(0, 0, width, height)
       ctx.fillStyle = backgroundColor
       ctx.fillRect(0, 0, width, height)
 

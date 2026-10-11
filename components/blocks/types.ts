@@ -52,6 +52,22 @@ export interface HeroContent {
   size?: 'full' | 'medium' | 'compact'
   /** Passthrough overrides for an animated background variant. */
   background?: Record<string, unknown>
+  /** ledger variant: small mono reassurance line under the CTAs. */
+  trustLine?: string
+  /** ledger variant: the statement card beside the copy. */
+  ledger?: LedgerCardContent
+}
+
+/**
+ * A "statement" card: ruled rows, each checked off, totalling to a count.
+ * The total is always rows.length, never typed in.
+ */
+export interface LedgerCardContent {
+  title?: string
+  /** Small mono tag opposite the title, e.g. 'Statement'. */
+  tag?: string
+  rows: string[]
+  totalLabel?: string
 }
 
 // ── Path cards ───────────────────────────────────────────────────────────────

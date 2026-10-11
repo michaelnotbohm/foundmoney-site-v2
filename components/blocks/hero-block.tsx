@@ -4,12 +4,15 @@ import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { WaveRibbonBackground } from '@/components/backgrounds/wave-ribbon-background'
+import { LedgerCard } from './ledger-card'
 import type { BlockProps, HeroContent, CtaLink } from './types'
 
 /**
  * Variants:
  *   centered        — default, prose over the page background
  *   wave-ribbon     — animated canvas mesh behind the copy
+ *   ledger          — dark ground, grain, faint wave ribbon; copy left, an
+ *                     animated statement card (content.ledger) right
  *   solid           — layered gradient band on the secondary colour
  *   full-bleed      — background photograph with an overlay
  *   split-image     — copy left, image right
@@ -40,9 +43,12 @@ export function HeroBlock({
     poster,
     size = 'full',
     background,
+    trustLine,
+    ledger,
   } = content
 
   const isWaveRibbon = variant === 'wave-ribbon'
+  const isLedger = variant === 'ledger'
   const isSplitImage = variant === 'split-image'
   const isFullBleed = variant === 'full-bleed'
   const isMinimal = variant === 'minimal'
@@ -163,6 +169,99 @@ export function HeroBlock({
         {eyebrow}
       </p>
     )
+
+  // ── Ledger ────────────────────────────────────────────────────────────────
+  //
+  // Copy rises in on a CSS stagger (.rise-*); the card is a client component
+  // that starts its row-by-row count once the copy has landed.
+
+  if (isLedger) {
+    return (
+      <section className="grain relative overflow-hidden bg-[var(--color-secondary)] text-[var(--color-secondary-foreground)]">
+        <WaveRibbonBackground
+          strokeColor="#B08A3F"
+          lineOpacity={0.5}
+          {...(background ?? {})}
+          backgroundColor="transparent"
+          style={{ opacity: 0.55 }}
+        />
+
+        <div className="mx-auto flex max-w-[1240px] flex-wrap items-center gap-14 px-5 pb-20 pt-16 md:px-10 md:pb-28 md:pt-[104px]">
+          <div className="flex min-w-0 flex-[1_1_560px] flex-col gap-7">
+            {eyebrow && (
+              <p className="rise m-0 flex items-center gap-3 font-mono text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-accent)]">
+                <span
+                  aria-hidden="true"
+                  className="inline-block h-px w-7 bg-[var(--color-accent)]"
+                />
+                {eyebrow}
+              </p>
+            )}
+
+            <h1
+              className="rise rise-1 m-0 max-w-[15ch] font-[var(--font-heading)] text-[clamp(2.75rem,6vw,4.75rem)] font-medium leading-[0.98]"
+              style={{ fontVariationSettings: "'opsz' 144", letterSpacing: '-0.02em' }}
+            >
+              {headline}
+              {headlineAccent && (
+                <span className="font-normal italic text-[var(--color-accent)]">
+                  {' '}
+                  {headlineAccent}
+                </span>
+              )}
+            </h1>
+
+            {subhead && (
+              <p className="rise rise-2 m-0 max-w-[58ch] text-[17px] leading-relaxed text-[var(--color-secondary-foreground)]/80 md:text-[19px]">
+                {subhead}
+              </p>
+            )}
+
+            {(primaryCta || secondaryCta) && (
+              <div className="rise rise-3 flex flex-wrap items-center gap-3.5">
+                {primaryCta && (
+                  <Link
+                    href={primaryCta.href}
+                    className="inline-flex min-h-14 max-w-full items-center justify-center gap-2.5 px-7 py-3 text-center text-base font-semibold text-[var(--color-accent-foreground)] md:whitespace-nowrap transition-[transform,box-shadow] duration-200 hover:-translate-y-px"
+                    style={{
+                      background: 'var(--color-accent)',
+                      borderRadius: 'var(--radius-button)',
+                      boxShadow:
+                        '0 10px 30px color-mix(in srgb, var(--color-accent) 25%, transparent)',
+                    }}
+                  >
+                    {primaryCta.label}
+                    <ArrowRight className="h-[18px] w-[18px]" />
+                  </Link>
+                )}
+                {secondaryCta && (
+                  <Link
+                    href={secondaryCta.href}
+                    className="inline-flex h-14 items-center whitespace-nowrap border border-[var(--color-secondary-foreground)]/30 px-7 text-base font-semibold text-[var(--color-secondary-foreground)] transition-[transform,border-color] duration-200 hover:-translate-y-px hover:border-[var(--color-accent)]"
+                    style={{ borderRadius: 'var(--radius-button)' }}
+                  >
+                    {secondaryCta.label}
+                  </Link>
+                )}
+              </div>
+            )}
+
+            {trustLine && (
+              <p className="rise rise-4 m-0 mt-2 font-mono text-[12.5px] tracking-[0.06em] text-[var(--color-secondary-foreground)]/55">
+                {trustLine}
+              </p>
+            )}
+          </div>
+
+          {ledger && ledger.rows?.length > 0 && (
+            <div className="rise rise-3 w-full min-w-[280px] flex-[0_1_420px]">
+              <LedgerCard {...ledger} />
+            </div>
+          )}
+        </div>
+      </section>
+    )
+  }
 
   // ── Wave ribbon ───────────────────────────────────────────────────────────
 

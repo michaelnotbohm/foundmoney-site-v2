@@ -5,6 +5,7 @@
 // site's entire visual identity to change without a code change.
 
 import type { SiteTheme } from '@/lib/types/database'
+import { showDrafts } from '@/lib/draft'
 import type React from 'react'
 
 type ThemeToken = Exclude<keyof SiteTheme, 'draft'>
@@ -31,14 +32,11 @@ const TOKEN_MAP: Record<ThemeToken, string> = {
 
 /**
  * The tokens this deployment should render: theme.draft layered over the live
- * tokens everywhere except Vercel production. Vercel sets VERCEL_ENV to
- * 'preview' on preview deployments. Locally it is whatever `vercel env pull`
- * wrote (often 'production'), so run `VERCEL_ENV=development npm run dev` to
- * see the draft.
+ * tokens everywhere except Vercel production (see lib/draft.ts).
  */
 export function resolveTheme(theme: SiteTheme): Omit<SiteTheme, 'draft'> {
   const { draft, ...live } = theme
-  if (!draft || process.env.VERCEL_ENV === 'production') return live
+  if (!draft || !showDrafts()) return live
   return { ...live, ...draft }
 }
 
