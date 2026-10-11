@@ -31,8 +31,10 @@ const TOKEN_MAP: Record<ThemeToken, string> = {
 
 /**
  * The tokens this deployment should render: theme.draft layered over the live
- * tokens everywhere except Vercel production (VERCEL_ENV is 'preview' on
- * preview deployments and unset locally).
+ * tokens everywhere except Vercel production. Vercel sets VERCEL_ENV to
+ * 'preview' on preview deployments. Locally it is whatever `vercel env pull`
+ * wrote (often 'production'), so run `VERCEL_ENV=development npm run dev` to
+ * see the draft.
  */
 export function resolveTheme(theme: SiteTheme): Omit<SiteTheme, 'draft'> {
   const { draft, ...live } = theme
