@@ -8,8 +8,7 @@ Site = `foundmoney-site-v2` · Supabase `yuxwipofzxcqgtchoodz` · Vercel `foundm
 
 ## Phase 0 — Before touching anything (Michael, ~10 min)
 
-1. Save the five email attachments into `docs/client-input/2026-10-09-anthony/assets/`:
-   `Found_Money_Logo_Transparent.webp`, the 3 stage PNGs, `Found-Money-Partnerships-Sample-Successes.pdf`. (Gmail MCP can read the email but not download attachments.)
+1. Save the usable email attachments into `docs/client-input/2026-10-09-anthony/assets/`: the 3 stage PNGs and `Found-Money-Partnerships-Sample-Successes.pdf`. (The attached logo is wrong - skip it. Gmail MCP can read the email but not download attachments.)
 2. `cd ~/Developer/foundmoney-site-v2 && vercel link --project foundmoney-site && vercel env pull .env.local` (the env file in the repo already has the public Supabase URL + anon key; `SUPABASE_SERVICE_ROLE_KEY` and `ASKABLE_*` come from Vercel).
 3. `npm install && npm run dev` → confirm `http://localhost:3000` renders the current site. Run `npx tsc --noEmit` once to get the type baseline.
 4. Confirm the `FeatureIndex` issue from the last session is actually resolved: the DB sections are now `type = 'feature_index'` and `registry.ts` maps `feature_index` → `FeatureIndexBlock` (commits 9f389c4/e587c71). Verify on localhost; if the old cards still show on prod it is only the Vercel build cache.
@@ -25,7 +24,7 @@ All via Supabase MCP `execute_sql` on `yuxwipofzxcqgtchoodz`. **Safety ritual fi
 | 1.3 | Team-page media_text CTAs ("Book a call with Anthony/Melanie/Matt") → booking link | 3 `media_text` sections on `/team/*` |
 | 1.4 | `social_links = {"linkedin": "https://www.linkedin.com/in/anthonysimonie/", "facebook": "https://www.facebook.com/anthony.simonie.1"}` (feeds Organization `sameAs`) | `site_settings.social_links` |
 | 1.5 | `team_members.linkedin_url` for Anthony = his LinkedIn (Person `sameAs`). Melanie/Matt stay null until they send theirs. | `team_members` |
-| 1.6 | Upload `Found_Money_Logo_Transparent.webp` to Storage bucket `Public` (keep filename casing), set `site_settings.logo_url`. Check it on the ivory nav background; if it needs a dark variant, `logo_dark_url`. Also set `favicon_url` + theme `default_og_image` if the logo works as an OG fallback. | Storage + `site_settings` |
+| 1.6 | **Logo: on hold.** The `.webp` Anthony attached is not the right logo (Michael, 2026-10-11) - do not upload or set `logo_url`. Nav/footer keep the wordmark fallback until a correct file arrives. Still blocking for launch: logo + OG image. | - |
 | 1.7 | **Dash pass** — Anthony: "Delete all long dashes, replace with short ones." One `UPDATE` over `sections.content`, `pages.meta_description`, `team_members.bio`, `site_settings.tagline/description`: replace ` — ` → ` - `, then any remaining `—` / `–` → `-`. Also grep the repo for hard-coded `—` in components (e.g. `feature-index.tsx`, footer). | DB + code |
 | 1.8 | Contact page: keep the lead form, but add the booking link as the primary action. Cheapest: a `cta_band` above the form pointing at the booking link. Better (optional, one new block): a `booking_embed` block that iframes the GHL widget — see Phase 5. | `/contact` sections |
 

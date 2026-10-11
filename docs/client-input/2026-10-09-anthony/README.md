@@ -10,7 +10,7 @@ Anthony's note: "We can make more changes later if needed, but want to get it li
 | Booking link (all CTAs, nav "Book a Call", end of every service page) | `https://link.foundmoneypartnerships.com/widget/bookings/anthony-simonie` |
 | LinkedIn (use for the firm for now) | `https://www.linkedin.com/in/anthonysimonie/` |
 | Facebook (use for the firm for now) | `https://www.facebook.com/anthony.simonie.1` |
-| Logo | `Found_Money_Logo_Transparent.webp` (attachment — save to `assets/`) |
+| Logo | `Found_Money_Logo_Transparent.webp` attached, but **not the correct logo** (Michael, 2026-10-11) - do not use; correct logo still outstanding |
 | Stage photos (3) | `Dynamic Keynote Speaker on Blue-Lit Stage.png`, `Blue-Lit Stage Meet-and-Greet.png`, `Conference Speaker on Branded Stage (1).png` (attachments — save to `assets/`) |
 | Sample successes | `Found-Money-Partnerships-Sample-Successes.pdf` (attachment — save to `assets/`; partners will add more, best ones get picked) |
 | Podcast appearances | Anthony will send links; idea: "As seen on" strip with logos/screenshots |
@@ -70,3 +70,13 @@ Anthony supplied full long-form copy for **five** services (see `services/`):
 5. Offer Repositioning — `services/05-offer-repositioning.md`
 
 Each ends with a named CTA that should be a button to the booking link.
+
+## Getting the attachments onto the site
+
+1. In Gmail, open the "FMP Website" email → download the 3 stage photos + the PDF (skip the logo) → move them into this folder's `assets/`.
+2. Pull env once: `vercel env pull .env.local` (needs `SUPABASE_SERVICE_ROLE_KEY`).
+3. Upload: `node --env-file=.env.local scripts/upload-assets.mjs docs/client-input/2026-10-09-anthony/assets/*`
+   The script normalizes names to lowercase-kebab and prints each public URL.
+4. Point the DB at them (Phase 1.6 / Phase 4 of `docs/UPDATE_PLAN.md`):
+   - stage photos → `media_text.image` on `/team/anthony-simonie`, or an `image` block
+   - successes PDF → read it, then write the results into `/case-studies` sections (don't link the raw PDF)
