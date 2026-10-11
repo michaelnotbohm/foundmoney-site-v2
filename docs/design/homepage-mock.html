@@ -1,0 +1,376 @@
+<!doctype html>
+<!-- REFERENCE MOCK for docs/DESIGN_UPGRADE.md ("The Ledger" direction). Static HTML, not site code.
+     Open in a browser to see the target. Exact tokens, type sizes, spacing and structure are the spec;
+     Claude Code translates each section into the block/variant named in the brief. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Found Money Partnerships - Homepage</title>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FAF7F0;color:#141A17;font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#1F3D32;text-decoration:none}a:hover{color:#B08A3F}
+.serif{font-family:'Fraunces',Georgia,serif;font-variation-settings:'opsz' 144;letter-spacing:-0.02em}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:1240px;margin:0 auto;padding:0 40px;box-sizing:border-box}
+.grain{position:relative;isolation:isolate}
+.grain::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.07;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");z-index:0}
+.grain>*{position:relative;z-index:1}
+.ruled{background-image:repeating-linear-gradient(0deg,transparent 0 47px,rgba(176,138,63,.14) 47px 48px)}
+.btn{display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 28px;border-radius:999px;font-weight:600;font-size:16px;white-space:nowrap;transition:transform .2s,box-shadow .2s;box-sizing:border-box}
+.btn:hover{transform:translateY(-1px)}
+.btn-brass{background:#D4B36A;color:#15291F;box-shadow:0 10px 30px rgba(212,179,106,.25)}
+.btn-brass:hover{color:#15291F;box-shadow:0 14px 36px rgba(212,179,106,.4)}
+.btn-ghost{border:1px solid rgba(250,247,240,.28);color:#FAF7F0}
+.btn-ghost:hover{color:#FAF7F0;border-color:#D4B36A}
+.btn-green{background:#1F3D32;color:#FAF7F0}
+.btn-green:hover{color:#FAF7F0;background:#15291F}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+.card-hover{transition:transform .25s,box-shadow .25s}
+.card-hover:hover{transform:translateY(-4px);box-shadow:0 24px 50px rgba(20,26,23,.12)}
+.marquee{display:flex;gap:64px;white-space:nowrap;overflow:hidden}
+.marquee>div{display:flex;gap:64px;animation:scroll 28s linear infinite}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.rise{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+.d1{animation-delay:.08s}.d2{animation-delay:.18s}.d3{animation-delay:.3s}.d4{animation-delay:.42s}
+.duo{filter:grayscale(1) contrast(1.05) sepia(.35) hue-rotate(95deg) saturate(.9) brightness(.9)}
+.nav-link{font-size:15px;font-weight:500;color:#141A17}
+.nav-link:hover{color:#B08A3F}
+.svc{display:flex;flex-direction:column;justify-content:space-between;min-height:300px;padding:32px;border-radius:12px;box-sizing:border-box}
+.svc-ivory{background:#FFFFFF;border:1px solid #E6DFCF}
+.svc-green{background:#1F3D32;color:#FAF7F0}
+.svc-green a{color:#D4B36A}
+.svc h3{margin:12px 0 8px;font-size:28px;font-weight:500;line-height:1.1}
+.svc p{margin:0;font-size:15.5px;line-height:1.55;opacity:.78}
+.ledger-row{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-bottom:1px solid rgba(20,26,23,.1);font-size:15px}
+.step{display:flex;flex-direction:column;gap:12px;padding-top:24px;border-top:2px solid #1F3D32;flex:1 1 220px;min-width:0}
+.quote{background:#FFFFFF;border:1px solid #E6DFCF;border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:18px;flex:1 1 300px}
+@media (max-width:860px){.wrap{padding:0 20px}.hide-m{display:none}}
+</style>
+
+<div style="width: 100%; min-height: 100vh; background: #FAF7F0; display: flex; flex-direction: column;">
+
+<!-- NAV -->
+<header style="position: sticky; top: 0; z-index: 50; background: rgba(250,247,240,.88); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(20,26,23,.08);">
+  <div class="wrap" style="display: flex; align-items: center; justify-content: space-between; height: 76px; gap: 24px;">
+    <a href="#top" class="serif" style="font-size: 22px; font-weight: 600; color: #15291F; display: flex; align-items: center; gap: 10px;">
+      <span aria-hidden="true" style="display: inline-block; width: 28px; height: 28px; border-radius: 50%; background: #1F3D32; box-shadow: inset 0 0 0 6px #D4B36A;"></span>
+      Found Money Partnerships
+    </a>
+    <nav class="hide-m" style="display: flex; gap: 32px; align-items: center;">
+      <a class="nav-link" href="#approach">What We Do</a>
+      <a class="nav-link" href="#services">Services</a>
+      <a class="nav-link" href="#team">Partners</a>
+      <a class="nav-link" href="#results">Results</a>
+    </nav>
+    <a class="btn btn-green" href="https://link.foundmoneypartnerships.com/widget/bookings/anthony-simonie" style="height: 46px; padding: 0 22px; font-size: 15px;">Book a call</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="top" class="grain" style="background: #15291F; color: #FAF7F0; overflow: hidden;">
+  <svg aria-hidden="true" viewBox="0 0 1440 700" preserveAspectRatio="none" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: .55;">
+    <g fill="none" stroke="#B08A3F" stroke-width=".7" opacity=".55">
+      <path d="M-20 420 C 200 300, 420 560, 700 440 S 1200 300, 1460 420"/>
+      <path d="M-20 440 C 200 320, 420 580, 700 460 S 1200 320, 1460 440"/>
+      <path d="M-20 460 C 200 340, 420 600, 700 480 S 1200 340, 1460 460"/>
+      <path d="M-20 480 C 200 360, 420 620, 700 500 S 1200 360, 1460 480"/>
+      <path d="M-20 500 C 200 380, 420 640, 700 520 S 1200 380, 1460 500"/>
+      <path d="M-20 520 C 200 400, 420 660, 700 540 S 1200 400, 1460 520"/>
+      <path d="M-20 540 C 200 420, 420 680, 700 560 S 1200 420, 1460 540"/>
+      <path d="M-20 560 C 200 440, 420 700, 700 580 S 1200 440, 1460 560"/>
+      <path d="M-20 580 C 200 460, 420 720, 700 600 S 1200 460, 1460 580"/>
+      <path d="M-20 600 C 200 480, 420 740, 700 620 S 1200 480, 1460 600"/>
+    </g>
+  </svg>
+  <div class="wrap" style="display: flex; flex-wrap: wrap; align-items: center; gap: 56px; padding-top: 104px; padding-bottom: 112px;">
+    <div style="flex: 1 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 28px;">
+      <p class="eyebrow rise" style="margin: 0; color: #D4B36A; display: flex; align-items: center; gap: 12px;">
+        <span aria-hidden="true" style="display: inline-block; width: 28px; height: 1px; background: #D4B36A;"></span>
+        Growth partners. Not an agency.
+      </p>
+      <h1 class="serif rise d1" style="margin: 0; font-size: 76px; line-height: .98; font-weight: 500; max-width: 15ch;">
+        There is money hiding in relationships you already have<span style="color: #D4B36A; font-style: italic; font-weight: 400;"> and in the ones that haven't converted yet.</span>
+      </h1>
+      <p class="rise d2" style="margin: 0; font-size: 19px; line-height: 1.6; max-width: 58ch; color: rgba(250,247,240,.78);">
+        We're a growth partner that works alongside you to find revenue you may already be sitting on - in the relationships you've built, the audience that knows you but hasn't bought yet, and the growth strategies you haven't tapped into. Then we help you turn those opportunities into more referrals, closed business, and revenue.
+      </p>
+      <div class="rise d3" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center;">
+        <a class="btn btn-brass" href="https://link.foundmoneypartnerships.com/widget/bookings/anthony-simonie">Book your revenue discovery call
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#approach">See how we work</a>
+      </div>
+      <p class="mono rise d4" style="margin: 8px 0 0; font-size: 12.5px; letter-spacing: .06em; color: rgba(250,247,240,.55);">
+        No pressure &middot; No canned pitch &middot; Custom audit before any strategy
+      </p>
+    </div>
+
+    <!-- Ledger card -->
+    <div class="rise d3" style="flex: 0 1 420px; min-width: 300px; background: #FAF7F0; color: #141A17; border-radius: 14px; padding: 30px 32px 24px; box-shadow: 0 40px 80px rgba(0,0,0,.35), 0 0 0 1px rgba(212,179,106,.35); transform: rotate(-1.2deg);">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #15291F; padding-bottom: 12px;">
+        <span class="serif" style="font-size: 20px; font-weight: 600;">Unclaimed revenue</span>
+        <span class="mono" style="font-size: 11px; letter-spacing: .14em; color: #6B7069;">STATEMENT</span>
+      </div>
+      <div class="ledger-row"><span>Past clients never re-engaged</span><span class="mono" style="color: #1F3D32;">&#10003;</span></div>
+      <div class="ledger-row"><span>Referrals never asked for</span><span class="mono" style="color: #1F3D32;">&#10003;</span></div>
+      <div class="ledger-row"><span>Email list treated as a broadcast</span><span class="mono" style="color: #1F3D32;">&#10003;</span></div>
+      <div class="ledger-row"><span>Audience watching, not buying</span><span class="mono" style="color: #1F3D32;">&#10003;</span></div>
+      <div class="ledger-row"><span>Prospects who went quiet</span><span class="mono" style="color: #1F3D32;">&#10003;</span></div>
+      <div class="ledger-row"><span>LinkedIn network with no strategy</span><span class="mono" style="color: #1F3D32;">&#10003;</span></div>
+      <div class="ledger-row"><span>Channels never put to work</span><span class="mono" style="color: #1F3D32;">&#10003;</span></div>
+      <div class="ledger-row" style="border-bottom: 0;"><span>A pitch that speaks to everyone</span><span class="mono" style="color: #1F3D32;">&#10003;</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 2px solid #15291F; margin-top: 6px; padding-top: 14px;">
+        <span style="font-weight: 600;">Sources of unclaimed revenue</span>
+        <span class="mono" style="font-size: 34px; font-weight: 500; color: #B08A3F;">08</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF STRIP -->
+<section style="background: #FAF7F0; border-bottom: 1px solid rgba(20,26,23,.08);">
+  <div class="wrap" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px 48px; padding-top: 28px; padding-bottom: 28px;">
+    <div style="display: flex; gap: 12px; align-items: baseline;"><span class="serif" style="font-size: 34px; font-weight: 500; color: #1F3D32;">45+</span><span style="font-size: 14px; color: #6B7069; max-width: 16ch; line-height: 1.3;">years combined experience</span></div>
+    <div style="display: flex; gap: 12px; align-items: baseline;"><span class="serif" style="font-size: 34px; font-weight: 500; color: #1F3D32;">7-figure</span><span style="font-size: 14px; color: #6B7069; max-width: 16ch; line-height: 1.3;">businesses built and scaled</span></div>
+    <div style="display: flex; gap: 12px; align-items: baseline;"><span class="serif" style="font-size: 34px; font-weight: 500; color: #1F3D32;">10,000+</span><span style="font-size: 14px; color: #6B7069; max-width: 16ch; line-height: 1.3;">clients served across our companies</span></div>
+    <div style="display: flex; gap: 12px; align-items: baseline;"><span class="serif" style="font-size: 34px; font-weight: 500; color: #1F3D32;">Fortune 500</span><span style="font-size: 14px; color: #6B7069; max-width: 16ch; line-height: 1.3;">and Wall Street relationships</span></div>
+  </div>
+</section>
+
+<!-- AS SEEN ON -->
+<section style="background: #F2EDE2; padding: 22px 0; border-bottom: 1px solid rgba(20,26,23,.06);">
+  <div class="wrap" style="display: flex; align-items: center; gap: 32px;">
+    <span class="eyebrow" style="color: #6B7069; flex: 0 0 auto;">As heard on</span>
+    <div class="marquee" style="flex: 1 1 auto;">
+      <div>
+        <span class="serif" style="font-size: 20px; color: #6B7069; opacity: .8;">[Podcast logo]</span><span class="serif" style="font-size: 20px; color: #6B7069; opacity: .8;">[Podcast logo]</span><span class="serif" style="font-size: 20px; color: #6B7069; opacity: .8;">[Podcast logo]</span><span class="serif" style="font-size: 20px; color: #6B7069; opacity: .8;">[Stage / event logo]</span><span class="serif" style="font-size: 20px; color: #6B7069; opacity: .8;">[Podcast logo]</span>
+        <span class="serif" style="font-size: 20px; color: #6B7069; opacity: .8;">[Podcast logo]</span><span class="serif" style="font-size: 20px; color: #6B7069; opacity: .8;">[Podcast logo]</span><span class="serif" style="font-size: 20px; color: #6B7069; opacity: .8;">[Podcast logo]</span><span class="serif" style="font-size: 20px; color: #6B7069; opacity: .8;">[Stage / event logo]</span><span class="serif" style="font-size: 20px; color: #6B7069; opacity: .8;">[Podcast logo]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHERE THE MONEY HIDES -->
+<section id="approach" style="padding: 120px 0 96px;">
+  <div class="wrap" style="display: flex; flex-direction: column; gap: 64px;">
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 32px;">
+      <div style="flex: 1 1 620px; display: flex; flex-direction: column; gap: 18px;">
+        <p class="eyebrow" style="margin: 0; color: #B08A3F;">The Found Money approach</p>
+        <h2 class="serif" style="margin: 0; font-size: 56px; line-height: 1.02; font-weight: 500; color: #15291F; max-width: 20ch;">Before you chase the next shiny marketing tactic, let's monetize what you've already built.</h2>
+      </div>
+      <p style="margin: 0; flex: 0 1 360px; font-size: 17px; line-height: 1.6; color: #4A504B;">We call it found money because that's exactly what it is: revenue that already exists inside the relationships, audience, and channels you have. It has simply never been unlocked.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px;">
+      <div class="card-hover" style="display: flex; flex-direction: column; gap: 20px; padding: 36px 32px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E6DFCF;">
+        <span class="serif" style="font-size: 64px; line-height: 1; font-weight: 300; color: #B08A3F;">01</span>
+        <p class="eyebrow" style="margin: 0; color: #6B7069;">Relationships</p>
+        <h3 class="serif" style="margin: 0; font-size: 26px; font-weight: 500; line-height: 1.15; color: #15291F;">Money sitting in relationships you already have.</h3>
+        <div style="display: flex; flex-direction: column;">
+          <div class="ledger-row"><span>A buyers list that has never been re-engaged.</span></div>
+          <div class="ledger-row"><span>Past clients ready to send business your way if you give them a reason and a way to do it.</span></div>
+          <div class="ledger-row" style="border-bottom: 0;"><span>An email list treated like a broadcast channel instead of a relationship channel.</span></div>
+        </div>
+      </div>
+      <div class="card-hover" style="display: flex; flex-direction: column; gap: 20px; padding: 36px 32px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E6DFCF;">
+        <span class="serif" style="font-size: 64px; line-height: 1; font-weight: 300; color: #B08A3F;">02</span>
+        <p class="eyebrow" style="margin: 0; color: #6B7069;">Attention</p>
+        <h3 class="serif" style="margin: 0; font-size: 26px; font-weight: 500; line-height: 1.15; color: #15291F;">Money sitting in an audience who is watching, but hasn't taken the next step.</h3>
+        <div style="display: flex; flex-direction: column;">
+          <div class="ledger-row"><span>Followers, subscribers, and leads who are watching but not buying, because the trust and positioning aren't there yet.</span></div>
+          <div class="ledger-row" style="border-bottom: 0;"><span>Prospects who went quiet after an initial conversation, simply because you didn't have an effective follow-up strategy.</span></div>
+        </div>
+      </div>
+      <div class="card-hover" style="display: flex; flex-direction: column; gap: 20px; padding: 36px 32px; border-radius: 14px; background: #FFFFFF; border: 1px solid #E6DFCF;">
+        <span class="serif" style="font-size: 64px; line-height: 1; font-weight: 300; color: #B08A3F;">03</span>
+        <p class="eyebrow" style="margin: 0; color: #6B7069;">Untapped</p>
+        <h3 class="serif" style="margin: 0; font-size: 26px; font-weight: 500; line-height: 1.15; color: #15291F;">Money sitting in channels you have access to but haven't put to work.</h3>
+        <div style="display: flex; flex-direction: column;">
+          <div class="ledger-row"><span>A LinkedIn network full of exactly the right people, with no strategy behind it.</span></div>
+          <div class="ledger-row"><span>Channels you have never deployed, tested, or capitalized on.</span></div>
+          <div class="ledger-row" style="border-bottom: 0;"><span>A sales process designed to speak to everyone, and as a result, connects with no one.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES BENTO -->
+<section id="services" style="background: #F2EDE2; padding: 104px 0;">
+  <div class="wrap" style="display: flex; flex-direction: column; gap: 48px;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px;">
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <p class="eyebrow" style="margin: 0; color: #B08A3F;">What we do</p>
+        <h2 class="serif" style="margin: 0; font-size: 52px; line-height: 1.02; font-weight: 500; color: #15291F;">Five ways we find the money.</h2>
+      </div>
+      <p style="margin: 0; max-width: 40ch; font-size: 16px; line-height: 1.6; color: #4A504B;">Every engagement starts with an audit of what you already have. Then we pick the levers, not a package.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 20px;">
+      <a class="svc svc-green card-hover" href="#services" style="grid-column: span 3;">
+        <div><span class="mono" style="font-size: 12px; letter-spacing: .14em; color: #D4B36A;">01</span><h3 class="serif">Email Marketing</h3><p>Your email list should be making you money, not just taking up space. Deliverability, list health, campaigns, and automated follow-up as one ecosystem.</p></div>
+        <span style="color: #D4B36A; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; margin-top: 24px;">Find the money hiding in your email list <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="svc svc-ivory card-hover" href="#services" style="grid-column: span 3;">
+        <div><span class="mono" style="font-size: 12px; letter-spacing: .14em; color: #B08A3F;">02</span><h3 class="serif" style="color: #15291F;">LinkedIn</h3><p style="color: #4A504B;">Your next client, investor, or referral partner is probably already on LinkedIn. The LinkedIn Leverage Process turns connections into conversations and conversations into revenue.</p></div>
+        <span style="color: #1F3D32; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; margin-top: 24px;">Find the money hiding in your network <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="svc svc-ivory card-hover" href="#services" style="grid-column: span 2;">
+        <div><span class="mono" style="font-size: 12px; letter-spacing: .14em; color: #B08A3F;">03</span><h3 class="serif" style="color: #15291F;">Paid Advertising</h3><p style="color: #4A504B;">Most businesses run ads. We build revenue engines: organic plus paid, and what happens after the click.</p></div>
+        <span style="color: #1F3D32; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; margin-top: 24px;">Uncover hidden revenue <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="svc svc-ivory card-hover" href="#services" style="grid-column: span 2;">
+        <div><span class="mono" style="font-size: 12px; letter-spacing: .14em; color: #B08A3F;">04</span><h3 class="serif" style="color: #15291F;">Branding</h3><p style="color: #4A504B;">More than a logo. The reason people choose you, trust you, and keep coming back.</p></div>
+        <span style="color: #1F3D32; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; margin-top: 24px;">Uncover your brand's potential <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="svc svc-green card-hover" href="#services" style="grid-column: span 2;">
+        <div><span class="mono" style="font-size: 12px; letter-spacing: .14em; color: #D4B36A;">05</span><h3 class="serif">Offer Repositioning</h3><p>What if the problem isn't what you're selling, but how you're selling it?</p></div>
+        <span style="color: #D4B36A; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; margin-top: 24px;">Uncover the value in your offer <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STAGE / CREDIBILITY BAND -->
+<section class="grain" style="background: #15291F; color: #FAF7F0; overflow: hidden;">
+  <div style="display: flex; flex-wrap: wrap; align-items: stretch;">
+    <div style="flex: 1 1 520px; min-height: 560px; position: relative; overflow: hidden;">
+      <img class="duo" src="https://yuxwipofzxcqgtchoodz.supabase.co/storage/v1/object/public/Public/team/dynamic-keynote-speaker-on-blue-lit-stage.png" alt="Anthony Simonie speaking on stage" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+      <div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(90deg, rgba(21,41,31,0) 55%, #15291F 100%), linear-gradient(0deg, rgba(21,41,31,.6), rgba(21,41,31,0) 50%);"></div>
+    </div>
+    <div style="flex: 1 1 520px; display: flex; flex-direction: column; justify-content: center; gap: 28px; padding: 96px 64px; box-sizing: border-box;">
+      <p class="eyebrow" style="margin: 0; color: #D4B36A;">Built by operators, not account managers</p>
+      <h2 class="serif" style="margin: 0; font-size: 48px; line-height: 1.04; font-weight: 500; max-width: 18ch;">Often we're not the first team they hire. We're the team they call when nothing else has worked.</h2>
+      <p style="margin: 0; font-size: 17px; line-height: 1.6; color: rgba(250,247,240,.75); max-width: 52ch;">Between us, we've built and scaled multiple companies, worked alongside Fortune 500 executives, advised entrepreneurs and investors, and developed proven systems for attracting ideal clients, referral partners, and high-net-worth investors.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 28px; margin-top: 8px;">
+        <div style="display: flex; align-items: center; gap: 12px;"><img src="https://yuxwipofzxcqgtchoodz.supabase.co/storage/v1/object/public/Public/anthony.jpg" alt="" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px #D4B36A;"><div><div style="font-weight: 600; font-size: 15px;">Anthony Simonie</div><div style="font-size: 13px; color: rgba(250,247,240,.6);">Co-Founder</div></div></div>
+        <div style="display: flex; align-items: center; gap: 12px;"><img src="https://yuxwipofzxcqgtchoodz.supabase.co/storage/v1/object/public/Public/melanie.jpeg" alt="" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px #D4B36A;"><div><div style="font-weight: 600; font-size: 15px;">Melanie Legamaro</div><div style="font-size: 13px; color: rgba(250,247,240,.6);">Co-Founder</div></div></div>
+        <div style="display: flex; align-items: center; gap: 12px;"><img src="https://yuxwipofzxcqgtchoodz.supabase.co/storage/v1/object/public/Public/matt.jpg" alt="" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px #D4B36A;"><div><div style="font-weight: 600; font-size: 15px;">Matt Emershy</div><div style="font-size: 13px; color: rgba(250,247,240,.6);">Partner</div></div></div>
+      </div>
+      <a href="#team" style="color: #D4B36A; font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 8px;">Meet the partners <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section style="padding: 112px 0;">
+  <div class="wrap" style="display: flex; flex-direction: column; gap: 56px;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px;">
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <p class="eyebrow" style="margin: 0; color: #B08A3F;">How it works</p>
+        <h2 class="serif" style="margin: 0; font-size: 52px; line-height: 1.02; font-weight: 500; color: #15291F;">Four steps. Starts with a conversation, not a pitch.</h2>
+      </div>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 32px;">
+      <div class="step"><span class="mono" style="font-size: 13px; color: #B08A3F;">STEP 01</span><h3 class="serif" style="margin: 0; font-size: 24px; font-weight: 500; color: #15291F;">Revenue discovery call</h3><p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: #4A504B;">We learn your business, your list, your goals, and where you suspect - or don't yet realize - money is being left on the table.</p></div>
+      <div class="step"><span class="mono" style="font-size: 13px; color: #B08A3F;">STEP 02</span><h3 class="serif" style="margin: 0; font-size: 24px; font-weight: 500; color: #15291F;">Custom audit and strategy</h3><p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: #4A504B;">We map your relationships, list, and positioning against a strategy built specifically for your business. No templates.</p></div>
+      <div class="step"><span class="mono" style="font-size: 13px; color: #B08A3F;">STEP 03</span><h3 class="serif" style="margin: 0; font-size: 24px; font-weight: 500; color: #15291F;">Done-with-you implementation</h3><p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: #4A504B;">We partner with your team to build and launch the system, staying hands-on through execution.</p></div>
+      <div class="step"><span class="mono" style="font-size: 13px; color: #B08A3F;">STEP 04</span><h3 class="serif" style="margin: 0; font-size: 24px; font-weight: 500; color: #15291F;">Optimize and scale</h3><p style="margin: 0; font-size: 15.5px; line-height: 1.6; color: #4A504B;">We track what's working, refine what isn't, and scale the channels producing results.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results" style="background: #F2EDE2; padding: 104px 0;">
+  <div class="wrap" style="display: flex; flex-direction: column; gap: 48px;">
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <p class="eyebrow" style="margin: 0; color: #B08A3F;">Results</p>
+      <h2 class="serif" style="margin: 0; font-size: 52px; line-height: 1.02; font-weight: 500; color: #15291F;">Real businesses. Real found money.</h2>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 24px;">
+      <div class="quote">
+        <span class="serif" style="font-size: 56px; line-height: .6; color: #B08A3F;">&ldquo;</span>
+        <p class="serif" style="margin: 0; font-size: 22px; line-height: 1.35; font-weight: 400; color: #15291F;">[Client result from the sample successes PDF - one sentence outcome with a number.]</p>
+        <div style="display: flex; align-items: center; gap: 12px; margin-top: auto;"><span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 50%; background: #E6DFCF;"></span><div><div style="font-weight: 600; font-size: 14px;">[Client name]</div><div style="font-size: 13px; color: #6B7069;">[Company, industry]</div></div></div>
+      </div>
+      <div class="quote">
+        <span class="serif" style="font-size: 56px; line-height: .6; color: #B08A3F;">&ldquo;</span>
+        <p class="serif" style="margin: 0; font-size: 22px; line-height: 1.35; font-weight: 400; color: #15291F;">[Client result from the sample successes PDF - one sentence outcome with a number.]</p>
+        <div style="display: flex; align-items: center; gap: 12px; margin-top: auto;"><span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 50%; background: #E6DFCF;"></span><div><div style="font-weight: 600; font-size: 14px;">[Client name]</div><div style="font-size: 13px; color: #6B7069;">[Company, industry]</div></div></div>
+      </div>
+      <div class="quote">
+        <span class="serif" style="font-size: 56px; line-height: .6; color: #B08A3F;">&ldquo;</span>
+        <p class="serif" style="margin: 0; font-size: 22px; line-height: 1.35; font-weight: 400; color: #15291F;">[Client result from the sample successes PDF - one sentence outcome with a number.]</p>
+        <div style="display: flex; align-items: center; gap: 12px; margin-top: auto;"><span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 50%; background: #E6DFCF;"></span><div><div style="font-weight: 600; font-size: 14px;">[Client name]</div><div style="font-size: 13px; color: #6B7069;">[Company, industry]</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" style="padding: 112px 0;">
+  <div class="wrap" style="display: flex; flex-direction: column; gap: 56px;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px;">
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <p class="eyebrow" style="margin: 0; color: #B08A3F;">The partners</p>
+        <h2 class="serif" style="margin: 0; font-size: 52px; line-height: 1.02; font-weight: 500; color: #15291F;">Three disciplines, one partnership.</h2>
+      </div>
+      <p style="margin: 0; max-width: 42ch; font-size: 16px; line-height: 1.6; color: #4A504B;">Wall Street, finance, business development, investor relations, sales, digital marketing, and brand positioning. You work directly with the founders, not a rotating account team.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px;">
+      <a href="#team" class="card-hover" style="display: flex; flex-direction: column; gap: 18px; color: #141A17;">
+        <div style="position: relative; aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; background: #E6DFCF;">
+          <img src="https://yuxwipofzxcqgtchoodz.supabase.co/storage/v1/object/public/Public/anthony.jpg" alt="Anthony Simonie" style="width: 100%; height: 100%; object-fit: cover; object-position: center 20%;">
+          <span aria-hidden="true" style="position: absolute; left: 16px; bottom: 16px; width: 48px; height: 4px; background: #D4B36A;"></span>
+        </div>
+        <div><h3 class="serif" style="margin: 0; font-size: 26px; font-weight: 500; color: #15291F;">Anthony Simonie</h3><p class="mono" style="margin: 6px 0 10px; font-size: 12px; letter-spacing: .12em; color: #B08A3F;">CO-FOUNDER</p><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A504B;">25+ years in marketing, sales, and business development. Creator of the LinkedIn Leverage Process.</p></div>
+      </a>
+      <a href="#team" class="card-hover" style="display: flex; flex-direction: column; gap: 18px; color: #141A17;">
+        <div style="position: relative; aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; background: #E6DFCF;">
+          <img src="https://yuxwipofzxcqgtchoodz.supabase.co/storage/v1/object/public/Public/melanie.jpeg" alt="Melanie Legamaro" style="width: 100%; height: 100%; object-fit: cover; object-position: center 20%;">
+          <span aria-hidden="true" style="position: absolute; left: 16px; bottom: 16px; width: 48px; height: 4px; background: #D4B36A;"></span>
+        </div>
+        <div><h3 class="serif" style="margin: 0; font-size: 26px; font-weight: 500; color: #15291F;">Melanie Legamaro</h3><p class="mono" style="margin: 6px 0 10px; font-size: 12px; letter-spacing: .12em; color: #B08A3F;">CO-FOUNDER</p><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A504B;">20+ years on Wall Street in leadership, sales, and organizational growth, with deep experience in investor relations.</p></div>
+      </a>
+      <a href="#team" class="card-hover" style="display: flex; flex-direction: column; gap: 18px; color: #141A17;">
+        <div style="position: relative; aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; background: #E6DFCF;">
+          <img src="https://yuxwipofzxcqgtchoodz.supabase.co/storage/v1/object/public/Public/matt.jpg" alt="Matt Emershy" style="width: 100%; height: 100%; object-fit: cover; object-position: center 20%;">
+          <span aria-hidden="true" style="position: absolute; left: 16px; bottom: 16px; width: 48px; height: 4px; background: #D4B36A;"></span>
+        </div>
+        <div><h3 class="serif" style="margin: 0; font-size: 26px; font-weight: 500; color: #15291F;">Matt Emershy</h3><p class="mono" style="margin: 6px 0 10px; font-size: 12px; letter-spacing: .12em; color: #B08A3F;">PARTNER</p><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4A504B;">Built a brand that drew a legitimate acquisition offer. Founder of a full-funnel marketing agency.</p></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="grain" style="background: #15291F; color: #FAF7F0; overflow: hidden;">
+  <div aria-hidden="true" style="position: absolute; left: 50%; top: 50%; width: 900px; height: 900px; transform: translate(-50%, -40%); border-radius: 50%; background: radial-gradient(circle, rgba(212,179,106,.22) 0%, rgba(212,179,106,0) 60%);"></div>
+  <div class="wrap" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 28px; padding-top: 128px; padding-bottom: 128px;">
+    <p class="eyebrow" style="margin: 0; color: #D4B36A;">Start with a conversation</p>
+    <h2 class="serif" style="margin: 0; font-size: 68px; line-height: .98; font-weight: 500; max-width: 16ch;">Let's find the money you've already earned.</h2>
+    <p style="margin: 0; font-size: 18px; line-height: 1.6; max-width: 54ch; color: rgba(250,247,240,.75);">No pressure. No canned pitch. Just a real conversation about where your business is leaving money on the table, and whether we're the right partner to help you go get it.</p>
+    <a class="btn btn-brass" href="https://link.foundmoneypartnerships.com/widget/bookings/anthony-simonie" style="height: 60px; padding: 0 34px; font-size: 17px;">Book your revenue discovery call
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <p class="mono" style="margin: 0; font-size: 12.5px; letter-spacing: .06em; color: rgba(250,247,240,.5);">30 minutes &middot; Direct with a founder &middot; You leave with something useful either way</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background: #0F1E17; color: rgba(250,247,240,.7); padding: 56px 0 32px;">
+  <div class="wrap" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px;">
+    <div style="display: flex; flex-direction: column; gap: 12px; flex: 1 1 280px;">
+      <span class="serif" style="font-size: 22px; font-weight: 600; color: #FAF7F0;">Found Money Partnerships</span>
+      <p style="margin: 0; font-size: 14px; max-width: 36ch; line-height: 1.55;">Growth partners who find the revenue hiding in the relationships, audience, and channels you already have.</p>
+    </div>
+    <div style="display: flex; gap: 64px; flex-wrap: wrap;">
+      <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;"><span class="eyebrow" style="color: #D4B36A; margin-bottom: 4px;">Services</span><a href="#services" style="color: inherit;">Email Marketing</a><a href="#services" style="color: inherit;">LinkedIn</a><a href="#services" style="color: inherit;">Paid Advertising</a><a href="#services" style="color: inherit;">Branding</a><a href="#services" style="color: inherit;">Offer Repositioning</a></div>
+      <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;"><span class="eyebrow" style="color: #D4B36A; margin-bottom: 4px;">Company</span><a href="#team" style="color: inherit;">About</a><a href="#team" style="color: inherit;">Partners</a><a href="#results" style="color: inherit;">Results</a><a href="#top" style="color: inherit;">FAQ</a></div>
+      <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;"><span class="eyebrow" style="color: #D4B36A; margin-bottom: 4px;">Connect</span><a href="https://www.linkedin.com/in/anthonysimonie/" style="color: inherit;">LinkedIn</a><a href="https://www.facebook.com/anthony.simonie.1" style="color: inherit;">Facebook</a><a href="https://link.foundmoneypartnerships.com/widget/bookings/anthony-simonie" style="color: inherit;">Book a call</a></div>
+    </div>
+  </div>
+  <div class="wrap" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 48px; padding-top: 20px; border-top: 1px solid rgba(250,247,240,.1); font-size: 12.5px; color: rgba(250,247,240,.45);">
+    <span>&copy; 2026 Found Money Partnerships</span>
+    <span style="display: flex; gap: 20px;"><a href="#top" style="color: inherit;">Privacy</a><a href="#top" style="color: inherit;">Terms</a></span>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
