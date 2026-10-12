@@ -197,6 +197,11 @@ export interface ImageContent {
   alt: string
   caption?: string
   aspect?: 'video' | 'square' | 'wide'
+  /**
+   * CSS object-position for the crop, e.g. '50% 15%' to keep faces in frame
+   * when a tall photo goes into a square or wide box. Defaults to centered.
+   */
+  position?: string
 }
 
 // ── Media + text ─────────────────────────────────────────────────────────────
