@@ -123,13 +123,19 @@ export interface FeatureItem {
   title: string
   body: string
   href?: string
+  /** Link text for this item (bento variant). Falls back to content.ctaLabel. */
+  ctaLabel?: string
 }
 
 export interface FeatureGridContent {
+  /** Small mono label above the heading (bento variant). */
+  eyebrow?: string
   heading?: string
   subheading?: string
   intro?: string
   items: FeatureItem[]
+  /** Default link text when an item has no ctaLabel. */
+  ctaLabel?: string
 }
 
 // ── Testimonials ─────────────────────────────────────────────────────────────
