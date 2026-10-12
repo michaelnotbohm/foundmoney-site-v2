@@ -50,6 +50,13 @@ export interface WaveRibbonBackgroundProps {
   edgeFade?: number
 
   speed?: number
+  /**
+   * Continuous horizontal drift: the wave pattern travels along the ribbon
+   * (~0.15px per frame) on top of the slow morph set by `speed`. The loop
+   * pauses while the canvas is offscreen. Reduced motion renders one static
+   * frame either way.
+   */
+  animate?: boolean
 
   className?: string
   style?: React.CSSProperties
@@ -72,6 +79,7 @@ export function WaveRibbonBackground({
   lineWidth = 0.6,
   edgeFade = 0.3,
   speed = 0.00006,
+  animate = false,
   className = '',
   style,
 }: WaveRibbonBackgroundProps) {
@@ -82,7 +90,11 @@ export function WaveRibbonBackground({
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const ctx = canvas.getContext('2d', { alpha: false })
+    // An opaque context clears to black, so only drop alpha when the ribbon
+    // paints its own solid ground.
+    const transparentGround =
+      backgroundColor === 'transparent' || /^rgba\(.*,\s*0\s*\)$/.test(backgroundColor)
+    const ctx = canvas.getContext('2d', { alpha: transparentGround })
     if (!ctx) return
 
     const reduceMotionQuery = window.matchMedia(
@@ -92,6 +104,10 @@ export function WaveRibbonBackground({
     let width = 0
     let height = 0
     let running = true
+    let visible = true
+    // Drift distance in px; converted to a phase along the ribbon per frame.
+    let drift = 0
+    const DRIFT_PX_PER_FRAME = 0.15
 
     // Parse the stroke colour once so per-line alpha is cheap.
     const parseColor = (c: string): [number, number, number] => {
@@ -117,16 +133,19 @@ export function WaveRibbonBackground({
 
     const surfacePoint = (u: number, v: number, t: number) => {
       const cx = v * width * 1.35 - width * 0.18
+      // Drift moves the pattern, not the geometry, so the ribbon's ends
+      // never slide into view.
+      const pv = width > 0 ? v - drift / (width * 1.35) : v
 
       // Layered sines give the ribbon its organic, non-repeating roll.
       const wave =
-        Math.sin(v * Math.PI * 2 * frequency + t) * 0.62 +
-        Math.sin(v * Math.PI * 2 * frequency * 1.9 + t * 1.4) * 0.26 +
-        Math.sin(v * Math.PI * 2 * frequency * 0.55 - t * 0.7) * 0.32
+        Math.sin(pv * Math.PI * 2 * frequency + t) * 0.62 +
+        Math.sin(pv * Math.PI * 2 * frequency * 1.9 + t * 1.4) * 0.26 +
+        Math.sin(pv * Math.PI * 2 * frequency * 0.55 - t * 0.7) * 0.32
 
       // The short axis is scaled and sheared as a function of v, producing
       // the pinch-and-flare that reads as a 3D surface.
-      const roll = Math.sin(v * Math.PI * 2 * frequency * 0.8 + t * 0.9)
+      const roll = Math.sin(pv * Math.PI * 2 * frequency * 0.8 + t * 0.9)
       const spread = 1 - perspective * (0.5 + 0.5 * roll)
 
       const centered = u - 0.5
@@ -149,8 +168,10 @@ export function WaveRibbonBackground({
       // Clear first so a 'transparent' background lets the section show
       // through instead of accumulating trails.
       ctx.clearRect(0, 0, width, height)
-      ctx.fillStyle = backgroundColor
-      ctx.fillRect(0, 0, width, height)
+      if (!transparentGround) {
+        ctx.fillStyle = backgroundColor
+        ctx.fillRect(0, 0, width, height)
+      }
 
       ctx.lineWidth = lineWidth
       ctx.lineJoin = 'round'
@@ -208,7 +229,8 @@ export function WaveRibbonBackground({
     }
 
     const loop = (time: number) => {
-      if (!running) return
+      if (!running || !visible) return
+      if (animate) drift += DRIFT_PX_PER_FRAME
       drawFrame(time)
       frameRef.current = requestAnimationFrame(loop)
     }
@@ -217,11 +239,20 @@ export function WaveRibbonBackground({
       cancelAnimationFrame(frameRef.current)
       if (reduceMotionQuery.matches) {
         drawFrame(0)
-      } else {
+      } else if (visible) {
         running = true
         frameRef.current = requestAnimationFrame(loop)
       }
     }
+
+    // Don't spend frames on a ribbon nobody can see.
+    const visibility = new IntersectionObserver(([entry]) => {
+      const was = visible
+      visible = entry.isIntersecting
+      if (visible && !was) start()
+      if (!visible) cancelAnimationFrame(frameRef.current)
+    })
+    visibility.observe(canvas)
 
     resize()
     start()
@@ -243,6 +274,7 @@ export function WaveRibbonBackground({
       running = false
       cancelAnimationFrame(frameRef.current)
       observer.disconnect()
+      visibility.disconnect()
       reduceMotionQuery.removeEventListener('change', onMotionChange)
     }
   }, [
@@ -262,6 +294,7 @@ export function WaveRibbonBackground({
     lineWidth,
     edgeFade,
     speed,
+    animate,
   ])
 
   return (

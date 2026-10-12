@@ -68,6 +68,8 @@ export function FeatureGridBlock({
   const isWhyUs = variant === 'why-us'
 
   if (variant === 'bento') return <BentoGrid content={content} />
+  if (variant === 'results') return <ResultsGrid content={content} />
+  if (variant === 'stack') return <StackList content={content} />
 
   if (isWhyUs) {
     return (
@@ -293,6 +295,170 @@ function BentoGrid({ content }: { content: FeatureGridContent }) {
             )
           })}
         </div>
+      </div>
+    </section>
+  )
+}
+
+/** Left-aligned mono eyebrow + Fraunces heading + optional lede. */
+function SectionHeader({
+  eyebrow,
+  heading,
+  lede,
+  className = '',
+}: {
+  eyebrow?: string
+  heading?: string
+  lede?: string
+  className?: string
+}) {
+  if (!eyebrow && !heading && !lede) return null
+  return (
+    <div className={`flex flex-col gap-3.5 ${className}`}>
+      {eyebrow && (
+        <p className="m-0 font-mono text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-accent-deep)]">
+          {eyebrow}
+        </p>
+      )}
+      {heading && (
+        <h2 className="font-heading m-0 text-[clamp(2rem,4.2vw,3rem)] font-medium leading-[1.04] tracking-[-0.02em] text-[var(--color-secondary)]">
+          {heading}
+        </h2>
+      )}
+      {lede && (
+        <p className="m-0 mt-1 max-w-[68ch] text-[17px] leading-relaxed text-[var(--color-foreground)]/75">
+          {lede}
+        </p>
+      )}
+    </div>
+  )
+}
+
+/**
+ * Results: proof cards in the bento rhythm (first three span 2 of 6 columns,
+ * the rest span 3, so five read 3 + 2). An item with a `metric` shows it as
+ * a large mono accent figure with `metricLabel` and sits on the primary
+ * colour; the rest are on the page ground with a hairline. Mono index,
+ * Fraunces title, full body.
+ */
+function ResultsGrid({ content }: { content: FeatureGridContent }) {
+  const { eyebrow, heading, intro, subheading, items } = content
+
+  return (
+    <section className="bg-[var(--color-surface)] py-20 md:py-24">
+      <div className="mx-auto flex max-w-[1240px] flex-col gap-12 px-5 md:px-10">
+        <SectionHeader eyebrow={eyebrow} heading={heading} lede={intro || subheading} />
+
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
+          {items.map((item, i) => {
+            const dark = Boolean(item.metric)
+            return (
+              <div
+                key={i}
+                className={`flex flex-col gap-4 rounded-[12px] p-8 transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(20,26,23,.12)] ${
+                  i < 3 ? 'md:col-span-2' : 'md:col-span-3'
+                } ${
+                  dark
+                    ? 'bg-[var(--color-primary)] text-[var(--color-primary-foreground)]'
+                    : 'border border-[var(--color-border)] bg-[var(--color-background)] text-[var(--color-foreground)]'
+                }`}
+              >
+                <span
+                  className={`font-mono text-xs tracking-[0.14em] ${
+                    dark ? 'text-[var(--color-accent)]' : 'text-[var(--color-accent-deep)]'
+                  }`}
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                {item.metric && (
+                  <div className="flex flex-col gap-1">
+                    <span className="font-mono text-[34px] font-medium leading-none tabular-nums text-[var(--color-accent)]">
+                      {item.metric}
+                    </span>
+                    {item.metricLabel && (
+                      <span className="text-[13px] leading-snug opacity-75">{item.metricLabel}</span>
+                    )}
+                  </div>
+                )}
+                <h3
+                  className={`font-heading m-0 text-2xl font-medium leading-[1.15] tracking-[-0.02em] ${
+                    dark ? '' : 'text-[var(--color-secondary)]'
+                  }`}
+                >
+                  {item.title}
+                </h3>
+                <p
+                  className={`m-0 text-[15.5px] leading-[1.6] ${
+                    dark ? 'opacity-80' : 'text-[var(--color-foreground)]/75'
+                  }`}
+                >
+                  {item.body}
+                </p>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/**
+ * Stack: two columns from lg. The left column (eyebrow, heading, intro,
+ * accent pill from content.cta) stays put while the full-width item cards
+ * scroll past on the right; each card has a mono index, 28px Fraunces title,
+ * the full body, and its own accent link label. Below lg the header sits on
+ * top and the cards stack.
+ */
+function StackList({ content }: { content: FeatureGridContent }) {
+  const { eyebrow, heading, intro, subheading, items, cta, ctaLabel = 'Learn more' } = content
+
+  return (
+    <section className="bg-[var(--color-background)] py-20 md:py-28">
+      <div className="mx-auto grid max-w-[1240px] grid-cols-1 gap-12 px-5 md:px-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+        <div className="flex flex-col gap-7 self-start lg:sticky lg:top-[100px]">
+          <SectionHeader eyebrow={eyebrow} heading={heading} lede={intro || subheading} />
+          {cta && (
+            <Link
+              href={cta.href}
+              className="inline-flex min-h-14 w-fit max-w-full items-center justify-center gap-2.5 px-7 py-3 text-center text-base font-semibold text-[var(--color-accent-foreground)] transition-[transform,box-shadow] duration-200 hover:-translate-y-px md:whitespace-nowrap"
+              style={{
+                background: 'var(--color-accent)',
+                borderRadius: 'var(--radius-button)',
+                boxShadow: '0 10px 30px color-mix(in srgb, var(--color-accent) 25%, transparent)',
+              }}
+            >
+              {cta.label}
+              <ArrowRight className="h-[18px] w-[18px] shrink-0" />
+            </Link>
+          )}
+        </div>
+
+        <ol className="m-0 flex list-none flex-col gap-4 p-0">
+          {items.map((item, i) => (
+            <li
+              key={i}
+              className="flex flex-col gap-3 rounded-[12px] border border-[var(--color-border)] bg-white p-8 md:p-10"
+            >
+              <span className="font-mono text-xs tracking-[0.14em] text-[var(--color-accent-deep)]">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h3 className="font-heading m-0 text-[28px] font-medium leading-[1.1] tracking-[-0.02em] text-[var(--color-secondary)]">
+                {item.title}
+              </h3>
+              <p className="m-0 text-base leading-[1.65] text-[var(--color-foreground)]/80">{item.body}</p>
+              {item.href && (
+                <Link
+                  href={item.href}
+                  className="group mt-2 inline-flex w-fit items-center gap-2 text-[15px] font-semibold text-[var(--color-accent-deep)]"
+                >
+                  {item.ctaLabel || ctaLabel}
+                  <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
+                </Link>
+              )}
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   )

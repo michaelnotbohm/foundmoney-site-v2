@@ -10,7 +10,9 @@ import type { BlockProps, HeroContent, CtaLink } from './types'
 /**
  * Variants:
  *   centered        — default, prose over the page background
- *   wave-ribbon     — animated canvas mesh behind the copy
+ *   wave-ribbon     — animated canvas mesh behind the copy; content.tone
+ *                     'dark' puts it on the secondary colour with grain,
+ *                     accent eyebrow/accent clause, and the ledger CTAs
  *   ledger          — dark ground, grain, faint wave ribbon; copy left, an
  *                     animated statement card (content.ledger) right
  *   solid           — layered gradient band on the secondary colour
@@ -45,6 +47,7 @@ export function HeroBlock({
     background,
     trustLine,
     ledger,
+    tone = 'light',
   } = content
 
   const isWaveRibbon = variant === 'wave-ribbon'
@@ -170,6 +173,37 @@ export function HeroBlock({
       </p>
     )
 
+  // Accent pill + ghost pill for dark grounds (ledger hero, dark wave-ribbon).
+  const renderDarkCtas = (className: string) =>
+    (primaryCta || secondaryCta) && (
+      <div className={cn('flex flex-wrap items-center gap-3.5', className)}>
+        {primaryCta && (
+          <Link
+            href={primaryCta.href}
+            className="inline-flex min-h-14 max-w-full items-center justify-center gap-2.5 px-7 py-3 text-center text-base font-semibold text-[var(--color-accent-foreground)] md:whitespace-nowrap transition-[transform,box-shadow] duration-200 hover:-translate-y-px"
+            style={{
+              background: 'var(--color-accent)',
+              borderRadius: 'var(--radius-button)',
+              boxShadow:
+                '0 10px 30px color-mix(in srgb, var(--color-accent) 25%, transparent)',
+            }}
+          >
+            {primaryCta.label}
+            <ArrowRight className="h-[18px] w-[18px]" />
+          </Link>
+        )}
+        {secondaryCta && (
+          <Link
+            href={secondaryCta.href}
+            className="inline-flex h-14 items-center whitespace-nowrap border border-[var(--color-secondary-foreground)]/30 px-7 text-base font-semibold text-[var(--color-secondary-foreground)] transition-[transform,border-color] duration-200 hover:-translate-y-px hover:border-[var(--color-accent)]"
+            style={{ borderRadius: 'var(--radius-button)' }}
+          >
+            {secondaryCta.label}
+          </Link>
+        )}
+      </div>
+    )
+
   // ── Ledger ────────────────────────────────────────────────────────────────
   //
   // Copy rises in on a CSS stagger (.rise-*); the card is a client component
@@ -216,34 +250,7 @@ export function HeroBlock({
               </p>
             )}
 
-            {(primaryCta || secondaryCta) && (
-              <div className="rise rise-3 flex flex-wrap items-center gap-3.5">
-                {primaryCta && (
-                  <Link
-                    href={primaryCta.href}
-                    className="inline-flex min-h-14 max-w-full items-center justify-center gap-2.5 px-7 py-3 text-center text-base font-semibold text-[var(--color-accent-foreground)] md:whitespace-nowrap transition-[transform,box-shadow] duration-200 hover:-translate-y-px"
-                    style={{
-                      background: 'var(--color-accent)',
-                      borderRadius: 'var(--radius-button)',
-                      boxShadow:
-                        '0 10px 30px color-mix(in srgb, var(--color-accent) 25%, transparent)',
-                    }}
-                  >
-                    {primaryCta.label}
-                    <ArrowRight className="h-[18px] w-[18px]" />
-                  </Link>
-                )}
-                {secondaryCta && (
-                  <Link
-                    href={secondaryCta.href}
-                    className="inline-flex h-14 items-center whitespace-nowrap border border-[var(--color-secondary-foreground)]/30 px-7 text-base font-semibold text-[var(--color-secondary-foreground)] transition-[transform,border-color] duration-200 hover:-translate-y-px hover:border-[var(--color-accent)]"
-                    style={{ borderRadius: 'var(--radius-button)' }}
-                  >
-                    {secondaryCta.label}
-                  </Link>
-                )}
-              </div>
-            )}
+            {renderDarkCtas('rise rise-3')}
 
             {trustLine && (
               <p className="rise rise-4 m-0 mt-2 font-mono text-[12.5px] tracking-[0.06em] text-[var(--color-secondary-foreground)]/55">
@@ -263,6 +270,52 @@ export function HeroBlock({
   }
 
   // ── Wave ribbon ───────────────────────────────────────────────────────────
+
+  if (isWaveRibbon && tone === 'dark') {
+    return (
+      <section
+        className={cn(
+          'grain relative flex items-center overflow-hidden bg-[var(--color-secondary)] text-[var(--color-secondary-foreground)]',
+          size === 'compact' ? 'min-h-[45vh]' : 'min-h-[82vh]',
+        )}
+      >
+        <WaveRibbonBackground
+          strokeColor="#D4B36A"
+          lineOpacity={0.5}
+          {...(background ?? {})}
+          backgroundColor="transparent"
+          style={{ opacity: 0.55 }}
+        />
+
+        <div className="mx-auto w-full max-w-[1240px] px-5 py-20 text-center md:px-10">
+          <div className="mx-auto flex max-w-3xl flex-col items-center gap-6">
+            {eyebrow && (
+              <p className="rise m-0 flex items-center gap-3 font-mono text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-accent)]">
+                <span aria-hidden="true" className="inline-block h-px w-7 bg-[var(--color-accent)]" />
+                {eyebrow}
+                <span aria-hidden="true" className="inline-block h-px w-7 bg-[var(--color-accent)]" />
+              </p>
+            )}
+            <h1 className="rise rise-1 font-heading m-0 text-[clamp(2.5rem,5.5vw,4rem)] font-medium leading-[1.02] tracking-[-0.02em]">
+              {headline}
+              {headlineAccent && (
+                <span className="font-normal italic text-[var(--color-accent)]">
+                  {' '}
+                  {headlineAccent}
+                </span>
+              )}
+            </h1>
+            {subhead && (
+              <p className="rise rise-2 m-0 max-w-xl text-[17px] leading-relaxed text-[var(--color-secondary-foreground)]/80 md:text-lg">
+                {subhead}
+              </p>
+            )}
+            {renderDarkCtas('rise rise-3 justify-center')}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   if (isWaveRibbon) {
     return (
