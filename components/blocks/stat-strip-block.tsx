@@ -153,7 +153,7 @@ function StatItem({
 
   const value = (
     <div
-      className={`font-heading font-bold leading-tight ${
+      className={`font-heading-num font-bold leading-tight ${
         asCards
           ? 'text-3xl text-[var(--color-primary)] md:text-4xl'
           : 'mb-2 break-words text-2xl text-[var(--color-secondary-foreground)] sm:text-3xl md:text-4xl lg:text-5xl'

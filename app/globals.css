@@ -139,6 +139,14 @@
   font-variation-settings: 'opsz' 144;
 }
 
+/* Display numerals in Fraunces (stat values). A lower optical size draws a
+   conventional 8; at opsz 144 its top bowl outgrows the bottom one. Use
+   instead of font-heading, not with it (both set font-variation-settings). */
+@utility font-heading-num {
+  font-family: var(--font-heading, 'Fraunces'), Georgia, serif;
+  font-variation-settings: 'opsz' 48, 'WONK' 0;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
