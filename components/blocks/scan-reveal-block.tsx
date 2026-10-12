@@ -112,7 +112,7 @@ export function ScanRevealBlock({
           )}
         </div>
 
-        <div className="scan-head-side">
+        <div className={intro ? 'scan-head-side' : 'scan-head-side scan-head-side--tally'}>
           {intro && <p className="scan-intro">{intro}</p>}
           <div className="scan-controls">
             <div className="scan-tally">
@@ -182,6 +182,8 @@ export function ScanRevealBlock({
             .scan-head-side {
               flex: 0 1 360px; display: flex; flex-direction: column; gap: 1.5rem;
             }
+            /* No intro: the column is just the tally, so size it to that. */
+            .scan-head-side--tally { flex: 0 0 auto; }
             .scan-eyebrow-top {
               margin: 0; font-family: var(--font-mono), ui-monospace, monospace;
               font-size: .75rem; font-weight: 500; letter-spacing: .18em;
