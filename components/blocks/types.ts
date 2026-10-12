@@ -52,6 +52,8 @@ export interface HeroContent {
   size?: 'full' | 'medium' | 'compact'
   /** Passthrough overrides for an animated background variant. */
   background?: Record<string, unknown>
+  /** wave-ribbon variant: 'dark' sets it on the secondary colour. */
+  tone?: 'light' | 'dark'
   /** ledger variant: small mono reassurance line under the CTAs. */
   trustLine?: string
   /** ledger variant: the statement card beside the copy. */
