@@ -1,17 +1,30 @@
 import ReactMarkdown from 'react-markdown'
+import { EditorialRichText } from './rich-text-editorial'
 import type { BlockProps, RichTextContent } from './types'
 
 /**
  * Prose body — the workhorse block. Markdown rather than raw HTML so content
  * stays editable by non-technical users and safe to render.
+ *
+ * Variants:
+ *   default   — single centred column
+ *   editorial — long-form layout: lede, H2 chapters in alternating bands,
+ *               pull lines, ruled label rows, and an xl chapter rail with a
+ *               booking pill (rich-text-editorial.tsx)
  */
 export function RichTextBlock({
   content,
+  site,
+  variant = 'default',
   embedded = false,
 }: BlockProps<RichTextContent>) {
   const { markdown, align = 'left' } = content
 
   if (!markdown) return null
+
+  if (variant === 'editorial' && !embedded) {
+    return <EditorialRichText markdown={markdown} bookingHref={site?.nav?.cta?.href} />
+  }
 
   const headingAlign = align === 'center' ? 'text-center' : ''
 
