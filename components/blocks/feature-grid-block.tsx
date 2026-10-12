@@ -232,7 +232,8 @@ function BentoGrid({ content }: { content: FeatureGridContent }) {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
           {items.map((item, i) => {
             const dark = i % 4 === 0
-            const span = i < 2 ? 'md:col-span-3' : 'md:col-span-2'
+            const wide = i < 2
+            const span = wide ? 'md:col-span-3' : 'md:col-span-2'
             const label = item.ctaLabel || ctaLabel
             const card = (
               <>
@@ -266,7 +267,12 @@ function BentoGrid({ content }: { content: FeatureGridContent }) {
                     }`}
                   >
                     {label}
-                    <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
+                    {/* Long per-service labels wrap on the 2-col cards and on
+                        phones; the arrow then floats detached, so it only
+                        shows on the 3-col cards from md up. */}
+                    {wide && (
+                      <ArrowRight className="hidden h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1 md:block" />
+                    )}
                   </span>
                 )}
               </>
