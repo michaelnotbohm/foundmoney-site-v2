@@ -9,9 +9,11 @@ import type { BlockProps, ScanRevealContent } from './types'
 // Columns that light up in sequence as the section enters the viewport, with a
 // running tally of the items revealed. Reads as an audit finding things.
 //
-// All copy and colours come from section content, so the same component works
-// for any three-part diagnostic — sources of unclaimed revenue, stages of a
-// process, categories of risk.
+// All copy comes from section content, so the same component works for any
+// three-part diagnostic — sources of unclaimed revenue, stages of a process,
+// categories of risk. Ledger styling: header with intro and tally on the
+// right, white numbered cards with ruled rows; colours are theme tokens
+// (column ink/tint in content are no longer used by this layout).
 //
 // The replay button only renders when `replayLabel` is set in section content.
 // Omit the key to remove the button entirely.
@@ -26,7 +28,7 @@ export function ScanRevealBlock({
   content,
   embedded = false,
 }: BlockProps<ScanRevealContent>) {
-  const { eyebrow, heading, tallyLabel, replayLabel, columns = [] } = content
+  const { eyebrow, heading, intro, tallyLabel, replayLabel, columns = [] } = content
 
   const total = columns.reduce((n, c) => n + (c.items?.length ?? 0), 0)
 
@@ -101,7 +103,7 @@ export function ScanRevealBlock({
   const inner = (
     <div className="scan-wrap">
       <div className="scan-head">
-        <div style={{ maxWidth: 620 }}>
+        <div className="scan-head-main">
           {eyebrow && <p className="scan-eyebrow-top">{eyebrow}</p>}
           {heading && (
             <h2 id="scan-title" className="scan-title">
@@ -110,50 +112,41 @@ export function ScanRevealBlock({
           )}
         </div>
 
-        <div className="scan-controls">
-          <div className="scan-tally">
-            <span className="scan-num">{count}</span>
-            {tallyLabel && <span className="scan-tally-label">{tallyLabel}</span>}
+        <div className={intro ? 'scan-head-side' : 'scan-head-side scan-head-side--tally'}>
+          {intro && <p className="scan-intro">{intro}</p>}
+          <div className="scan-controls">
+            <div className="scan-tally">
+              <span className="scan-num">{String(count).padStart(2, '0')}</span>
+              {tallyLabel && <span className="scan-tally-label">{tallyLabel}</span>}
+            </div>
+            {replayLabel && (
+              <button
+                type="button"
+                className="scan-replay"
+                onClick={sweep}
+                disabled={running}
+                aria-label="Replay the sequence"
+              >
+                {running ? 'Scanning…' : replayLabel}
+              </button>
+            )}
           </div>
-          {replayLabel && (
-            <button
-              type="button"
-              className="scan-replay"
-              onClick={sweep}
-              disabled={running}
-              aria-label="Replay the sequence"
-            >
-              {running ? 'Scanning…' : replayLabel}
-            </button>
-          )}
         </div>
       </div>
 
       <div className="scan-cols">
         {columns.map((col, i) => (
-          <div
-            key={col.label}
-            className="scan-col"
-            data-on={i <= scanned}
-            style={
-              {
-                '--ink': col.ink || 'var(--color-primary)',
-                '--tint': col.tint || 'var(--color-surface)',
-              } as React.CSSProperties
-            }
-          >
-            <span className="scan-bar" />
-            <p className="scan-eyebrow">
-              <span>{String(i + 1).padStart(2, '0')}</span>
-              <span>{col.label}</span>
-            </p>
+          <div key={col.label} className="scan-col" data-on={i <= scanned}>
+            <span className="scan-index">{String(i + 1).padStart(2, '0')}</span>
+            <p className="scan-eyebrow">{col.label}</p>
             {col.headline && <h3 className="scan-h">{col.headline}</h3>}
-            {col.items?.map((item) => (
-              <div key={item} className="scan-item">
-                <span className="scan-tick" aria-hidden="true" />
-                <span>{item}</span>
-              </div>
-            ))}
+            <div className="scan-rows">
+              {col.items?.map((item) => (
+                <div key={item} className="scan-item">
+                  {item}
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
@@ -171,43 +164,56 @@ export function ScanRevealBlock({
           __html: `
             .scan-section {
               background: var(--color-background);
-              padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem);
+              padding: clamp(4.5rem, 9vw, 7.5rem) 0 clamp(3.5rem, 7vw, 6rem);
               color: var(--color-foreground);
-              font-family: var(--font-body), system-ui, sans-serif;
             }
-            .scan-wrap { max-width: 1140px; margin: 0 auto; }
+            .scan-wrap {
+              max-width: 1240px; margin: 0 auto; padding: 0 clamp(1.25rem, 3vw, 2.5rem);
+              display: flex; flex-direction: column; gap: clamp(2.5rem, 5vw, 4rem);
+            }
             .scan-head {
               display: flex; flex-wrap: wrap; align-items: flex-end;
-              justify-content: space-between; gap: 1.5rem;
-              margin-bottom: clamp(2rem, 4vw, 3rem);
+              justify-content: space-between; gap: 2rem;
             }
+            .scan-head-main {
+              flex: 1 1 620px; min-width: 0;
+              display: flex; flex-direction: column; gap: 1.1rem;
+            }
+            .scan-head-side {
+              flex: 0 1 360px; display: flex; flex-direction: column; gap: 1.5rem;
+            }
+            /* No intro: the column is just the tally, so size it to that. */
+            .scan-head-side--tally { flex: 0 0 auto; }
             .scan-eyebrow-top {
-              margin: 0 0 .8rem; font-family: var(--font-mono), ui-monospace, monospace;
+              margin: 0; font-family: var(--font-mono), ui-monospace, monospace;
               font-size: .75rem; font-weight: 500; letter-spacing: .18em;
-              text-transform: uppercase; color: var(--color-muted);
+              text-transform: uppercase; color: var(--color-accent-deep);
             }
             .scan-title {
-              margin: 0; font-family: var(--font-heading), Georgia, serif;
-              font-size: clamp(1.8rem, 4vw, 2.9rem); line-height: 1.15;
-              font-weight: 600; letter-spacing: -.02em;
+              margin: 0; max-width: 20ch;
+              font-family: var(--font-heading), Georgia, serif;
+              font-variation-settings: 'opsz' 144;
+              font-size: clamp(2.25rem, 5vw, 3.5rem); line-height: 1.02;
+              font-weight: 500; letter-spacing: -.02em;
               color: var(--color-secondary);
             }
-            .scan-controls { display: flex; align-items: center; gap: 1.25rem; }
-            .scan-tally {
-              display: flex; align-items: baseline; gap: .6rem; white-space: nowrap;
+            .scan-intro {
+              margin: 0; font-size: 17px; line-height: 1.6;
+              color: color-mix(in srgb, var(--color-foreground) 75%, transparent);
             }
+            .scan-controls { display: flex; align-items: center; gap: 1.25rem; }
+            .scan-tally { display: flex; align-items: baseline; gap: .6rem; white-space: nowrap; }
             .scan-num {
               /* Mono, not the display serif: Fraunces' optical sizing draws
                  the 8 top-heavy at this size and it reads as upside down. */
               font-family: var(--font-mono), ui-monospace, monospace;
-              font-size: clamp(2.4rem, 5vw, 3.4rem); font-weight: 600;
-              letter-spacing: -.02em; line-height: 1;
+              font-size: 2.125rem; font-weight: 500; line-height: 1;
               font-variant-numeric: tabular-nums;
-              color: var(--color-secondary);
+              color: var(--color-accent-deep);
             }
             .scan-tally-label {
-              font-size: .9rem; line-height: 1.35; color: var(--color-muted);
-              max-width: 140px; white-space: normal;
+              font-size: .875rem; line-height: 1.35; color: var(--color-muted);
+              max-width: 160px; white-space: normal;
             }
             .scan-replay {
               border: 1px solid var(--color-border); background: transparent;
@@ -216,78 +222,58 @@ export function ScanRevealBlock({
               cursor: pointer; transition: border-color .25s, color .25s;
             }
             .scan-replay:hover:not(:disabled) {
-              border-color: var(--color-foreground);
-              color: var(--color-foreground);
+              border-color: var(--color-foreground); color: var(--color-foreground);
             }
             .scan-replay:disabled { opacity: .45; cursor: default; }
 
             .scan-cols {
               display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-              gap: clamp(1rem, 2.5vw, 2rem); position: relative;
+              gap: clamp(1.25rem, 3vw, 2.5rem);
             }
-            @media (max-width: 820px) {
+            @media (max-width: 860px) {
               .scan-cols { grid-template-columns: minmax(0, 1fr); }
             }
             .scan-col {
-              position: relative; border-top: 2px solid var(--color-border);
-              padding-top: 1.25rem; transition: border-color .5s ease;
+              display: flex; flex-direction: column; gap: 1.25rem;
+              padding: 36px 32px; border-radius: 14px;
+              background: var(--card, #FFFFFF); border: 1px solid var(--color-border);
+              transition: transform .25s, box-shadow .25s;
             }
-            .scan-col[data-on="true"] { border-top-color: var(--ink); }
-            .scan-bar {
-              position: absolute; top: -2px; left: 0; height: 2px; width: 0;
-              background: var(--ink);
-              transition: width .9s cubic-bezier(.65, 0, .35, 1);
-            }
-            .scan-col[data-on="true"] .scan-bar { width: 100%; }
-            .scan-eyebrow {
-              display: flex; align-items: baseline; gap: .6rem; margin: 0 0 .5rem;
-              font-family: var(--font-mono), ui-monospace, monospace;
-              font-size: .75rem; letter-spacing: .18em; text-transform: uppercase;
-              color: var(--color-muted); transition: color .5s ease;
-            }
-            .scan-col[data-on="true"] .scan-eyebrow { color: var(--ink); }
-            .scan-h {
-              margin: 0 0 1.4rem;
+            .scan-col:hover { transform: translateY(-4px); box-shadow: 0 24px 50px rgba(20,26,23,.12); }
+            .scan-index {
               font-family: var(--font-heading), Georgia, serif;
-              font-size: clamp(1.05rem, 1.7vw, 1.25rem); line-height: 1.35;
-              font-weight: 600; letter-spacing: -.01em;
-              color: var(--color-muted); transition: color .5s ease;
+              font-variation-settings: 'opsz' 144;
+              font-size: 64px; line-height: 1; font-weight: 300;
+              color: var(--color-border); transition: color .6s ease;
             }
-            .scan-col[data-on="true"] .scan-h { color: var(--color-secondary); }
+            .scan-col[data-on="true"] .scan-index { color: var(--color-accent-deep); }
+            .scan-eyebrow {
+              margin: 0; font-family: var(--font-mono), ui-monospace, monospace;
+              font-size: .75rem; letter-spacing: .18em; text-transform: uppercase;
+              color: var(--color-muted);
+            }
+            .scan-h {
+              margin: 0; font-family: var(--font-heading), Georgia, serif;
+              font-variation-settings: 'opsz' 144;
+              font-size: 26px; line-height: 1.15; font-weight: 500; letter-spacing: -.02em;
+              color: var(--color-secondary);
+            }
+            .scan-rows { display: flex; flex-direction: column; }
             .scan-item {
-              display: flex; gap: .7rem; padding: .85rem .9rem;
-              margin-bottom: .55rem; border-radius: var(--radius);
-              background: transparent; opacity: .4; transform: translateY(6px);
-              transition: opacity .5s ease, transform .5s ease,
-                background-color .5s ease;
-              font-size: .94rem; line-height: 1.55;
-              color: var(--color-foreground);
+              padding: 14px 0; border-bottom: 1px solid rgba(20,26,23,.1);
+              font-size: 15px; line-height: 1.5; color: var(--color-foreground);
+              opacity: .35; transform: translateY(6px);
+              transition: opacity .5s ease, transform .5s ease;
             }
-            .scan-col[data-on="true"] .scan-item {
-              opacity: 1; transform: none; background: var(--tint);
-            }
+            .scan-item:last-child { border-bottom: 0; }
+            .scan-col[data-on="true"] .scan-item { opacity: 1; transform: none; }
             .scan-col[data-on="true"] .scan-item:nth-child(2) { transition-delay: .08s; }
             .scan-col[data-on="true"] .scan-item:nth-child(3) { transition-delay: .16s; }
             .scan-col[data-on="true"] .scan-item:nth-child(4) { transition-delay: .24s; }
             .scan-col[data-on="true"] .scan-item:nth-child(5) { transition-delay: .32s; }
-            .scan-tick {
-              flex: none; width: 16px; height: 16px; margin-top: .18em;
-              border-radius: 50%; border: 1.5px solid currentColor;
-              color: var(--color-border); position: relative;
-              transition: color .4s ease;
-            }
-            .scan-col[data-on="true"] .scan-tick { color: var(--ink); }
-            .scan-tick::after {
-              content: ""; position: absolute; inset: 3px; border-radius: 50%;
-              background: currentColor; opacity: 0;
-              transition: opacity .4s ease .15s;
-            }
-            .scan-col[data-on="true"] .scan-tick::after { opacity: 1; }
 
             @media (prefers-reduced-motion: reduce) {
-              .scan-item, .scan-bar, .scan-h, .scan-eyebrow, .scan-tick {
-                transition: none;
-              }
+              .scan-item, .scan-index, .scan-col { transition: none; }
             }
           `,
         }}

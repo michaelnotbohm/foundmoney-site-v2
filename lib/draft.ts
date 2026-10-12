@@ -8,7 +8,9 @@
 //   site_settings.theme.draft   token overrides        (lib/theme.ts)
 //   site_settings.footer.draft  footer overrides       (site-footer.tsx)
 //   sections.content.draft      content overrides, plus an optional
-//                               `variant` that replaces sections.variant
+//                               `variant` and `type` that replace the
+//                               section's own (e.g. feature_index -> a
+//                               feature_grid variant)
 //
 // Production ignores the key, so writing a draft never changes the live site.
 // Promote after the code that renders it is deployed (SQL in CLAUDE.md).
@@ -23,17 +25,23 @@ export function showDrafts(): boolean {
   return process.env.VERCEL_ENV !== 'production'
 }
 
-/** A section's effective variant and content on this deployment. */
+/** A section's effective type, variant, and content on this deployment. */
 export function resolveSectionDraft(
+  type: string,
   variant: string,
   content: Record<string, unknown>,
-): { variant: string; content: Record<string, unknown> } {
+): { type: string; variant: string; content: Record<string, unknown> } {
   const { draft, ...live } = content
   if (!draft || typeof draft !== 'object' || !showDrafts()) {
-    return { variant, content: live }
+    return { type, variant, content: live }
   }
-  const { variant: draftVariant, ...overrides } = draft as Record<string, unknown>
+  const {
+    type: draftType,
+    variant: draftVariant,
+    ...overrides
+  } = draft as Record<string, unknown>
   return {
+    type: typeof draftType === 'string' ? draftType : type,
     variant: typeof draftVariant === 'string' ? draftVariant : variant,
     content: { ...live, ...overrides },
   }

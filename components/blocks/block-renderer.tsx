@@ -9,7 +9,7 @@
 // check rather than the last. Production stays silent: a half-rendered page
 // beats a crashed one.
 //
-// content.draft (and a draft variant) applies off production; see lib/draft.ts.
+// content.draft (and a draft type/variant) applies off production; see lib/draft.ts.
 
 import type { SiteSettings } from '@/lib/types/database'
 import type { Section } from './types'
@@ -25,23 +25,23 @@ export function BlockRenderer({ sections, site }: BlockRendererProps) {
   return (
     <>
       {sections.map((section) => {
-        const Component = getBlockComponent(section.type)
+        const { type, variant, content } = resolveSectionDraft(
+          section.type,
+          section.variant,
+          section.content as Record<string, unknown>,
+        )
+        const Component = getBlockComponent(type)
 
         if (!Component) {
           if (process.env.NODE_ENV !== 'production') {
             console.warn(
-              `[BlockRenderer] No component registered for type "${section.type}" ` +
-                `(variant "${section.variant}", section ${section.id}). ` +
+              `[BlockRenderer] No component registered for type "${type}" ` +
+                `(variant "${variant}", section ${section.id}). ` +
                 `Add it to components/blocks/registry.ts.`,
             )
           }
           return null
         }
-
-        const { variant, content } = resolveSectionDraft(
-          section.variant,
-          section.content as Record<string, unknown>,
-        )
 
         return (
           <Component

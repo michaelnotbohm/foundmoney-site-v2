@@ -82,10 +82,16 @@ export interface PathCard {
    * of a portrait in frame. Defaults to centered.
    */
   imagePosition?: string
+  /** portrait variant: short mono line under the name, e.g. 'Co-Founder'. */
+  role?: string
 }
 
 export interface PathCardsContent {
+  /** Small mono label above the heading (portrait variant). */
+  eyebrow?: string
   heading?: string
+  /** Paragraph opposite the heading (portrait variant). */
+  intro?: string
   cards: PathCard[]
   /** Link text on each card. Defaults to 'Learn more'. */
   ctaLabel?: string
@@ -123,13 +129,19 @@ export interface FeatureItem {
   title: string
   body: string
   href?: string
+  /** Link text for this item (bento variant). Falls back to content.ctaLabel. */
+  ctaLabel?: string
 }
 
 export interface FeatureGridContent {
+  /** Small mono label above the heading (bento variant). */
+  eyebrow?: string
   heading?: string
   subheading?: string
   intro?: string
   items: FeatureItem[]
+  /** Default link text when an item has no ctaLabel. */
+  ctaLabel?: string
 }
 
 // ── Testimonials ─────────────────────────────────────────────────────────────
@@ -245,6 +257,16 @@ export interface MediaTextContent {
   cta?: CtaLink
   /** Fade and slide in on scroll. */
   reveal?: boolean
+  /** band variant: small round headshots under the copy. */
+  people?: MediaTextPerson[]
+}
+
+export interface MediaTextPerson {
+  name: string
+  role?: string
+  image?: string
+  /** CSS object-position for the round crop. */
+  imagePosition?: string
 }
 
 // ── Quick facts ──────────────────────────────────────────────────────────────
@@ -268,6 +290,8 @@ export interface ProcessStep {
 }
 
 export interface ProcessTimelineContent {
+  /** Small mono label above the heading (columns variant). */
+  eyebrow?: string
   heading?: string
   intro?: string
   steps: ProcessStep[]
@@ -321,6 +345,8 @@ export interface ScanColumn {
 export interface ScanRevealContent {
   eyebrow?: string
   heading?: string
+  /** Paragraph in the right-hand column of the header. */
+  intro?: string
   /** Sits beside the running count, e.g. "sources of unclaimed revenue". */
   tallyLabel?: string
   replayLabel?: string

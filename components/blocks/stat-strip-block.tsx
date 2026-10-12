@@ -9,6 +9,8 @@ import type { BlockProps, StatStripContent, Stat } from './types'
  *   default        — metric band on the secondary colour
  *   cards          — bordered cards on the surface colour
  *   cards-imagery  — cards with a supporting photograph per stat
+ *   inline         — one row, no cards: display number + short caption
+ *                    (stat.label), hairlines above and below
  *
  * Merges the old stat_strip and stats blocks, which rendered nearly the same
  * thing through two different components.
@@ -24,6 +26,30 @@ export function StatStripBlock({
 
   const withImagery = variant === 'cards-imagery'
   const asCards = variant === 'cards' || withImagery
+
+  if (variant === 'inline') {
+    const row = (
+      <div className="mx-auto flex max-w-[1240px] flex-wrap justify-between gap-x-12 gap-y-6 px-5 py-7 md:px-10">
+        {stats.map((stat, i) => (
+          <div key={i} className="flex items-baseline gap-3">
+            <span className="font-heading-num text-[34px] font-medium leading-none text-[var(--color-primary)]">
+              {stat.value}
+              {stat.suffix}
+            </span>
+            <span className="max-w-[16ch] text-sm leading-tight text-[var(--color-muted)]">
+              {stat.label}
+            </span>
+          </div>
+        ))}
+      </div>
+    )
+    if (embedded) return row
+    return (
+      <section className="border-y border-[var(--color-foreground)]/[0.08] bg-[var(--color-background)]">
+        {row}
+      </section>
+    )
+  }
 
   const header = (eyebrow || heading || intro) && (
     <div className="mx-auto mb-12 max-w-2xl text-center">

@@ -76,6 +76,21 @@ Decisions for Michael/Anthony (don't block on them — default in parentheses):
 
   Use on Anthony's `/team/anthony-simonie` page (swap the `media_text` image `5a7de0e0-…` to the keynote shot, or add an `image` block gallery below the bio) and consider one as the About page image. They are 1.7-2.3 MB PNGs; `next/image` will optimize on the fly, but converting to JPEG/WebP and re-uploading under new names is worth doing before launch.
 
+## Copy for Anthony review
+
+Lines on the home page (staged as drafts for the Ledger redesign, PR #5) that are our wording, taken from the design mock, not Anthony's. Get his OK or replacements before the drafts are promoted.
+
+| Where | Section | Our line |
+|---|---|---|
+| Credibility band, eyebrow | new `media_text` band (between services and process) | Built by operators, not account managers |
+| Credibility band, headline | same | Often we're not the first team they hire. We're the team they call when nothing else has worked. *(adapted from his Email Marketing H2)* |
+| Services intro | `a6177bb4` (services bento) | Every engagement starts with an audit of what you already have. Then we pick the levers, not a package. |
+| Scan reveal intro | `6b437d82` | We call it found money because that's exactly what it is: revenue that already exists inside the relationships, audience, and channels you have. It has simply never been unlocked. |
+| Partners intro | `bcc06675` | Wall Street, finance, business development, investor relations, sales, digital marketing, and brand positioning. You work directly with the founders, not a rotating account team. |
+| Process header | `9bd68b64` | Eyebrow "How it works", heading "Four steps. Starts with a conversation, not a pitch." |
+
+Anthony's own words in the same drafts (no review needed): the band body (his company blurb, verbatim), the service link labels (his per-service CTA labels), all scan-reveal columns, stats, service and process bodies.
+
 ## Phase 5 — Optional code work (only if time allows before launch)
 
 1. `booking_embed` block (type `booking_embed`, variant `iframe`): renders the GHL widget inline on `/contact`. Register in `registry.ts`, add to `types.ts`. Generic — any client with a calendar embed benefits.

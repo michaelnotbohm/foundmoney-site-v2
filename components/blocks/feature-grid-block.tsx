@@ -67,6 +67,8 @@ export function FeatureGridBlock({
   const isCards = variant === 'cards'
   const isWhyUs = variant === 'why-us'
 
+  if (variant === 'bento') return <BentoGrid content={content} />
+
   if (isWhyUs) {
     return (
       <section className="bg-[var(--color-background)] py-16 md:py-24">
@@ -182,6 +184,111 @@ export function FeatureGridBlock({
                 style={{ borderRadius: 'var(--radius)' }}
               >
                 {cardContent}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/**
+ * Bento: a 6-column grid. The first two items span 3 columns, the rest span
+ * 2, so five items read 3+3 / 2+2+2. Items 1 and 5 (every fourth from the
+ * first) sit on the primary colour, the rest on white. Mono index, Fraunces
+ * title, one-liner, and the item's own link label. Stacks to one column on
+ * small screens.
+ */
+function BentoGrid({ content }: { content: FeatureGridContent }) {
+  const { eyebrow, heading, intro, subheading, items, ctaLabel = 'Learn more' } = content
+  const lede = intro || subheading
+
+  return (
+    <section className="bg-[var(--color-surface)] py-20 md:py-[104px]">
+      <div className="mx-auto flex max-w-[1240px] flex-col gap-12 px-5 md:px-10">
+        {(eyebrow || heading || lede) && (
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div className="flex flex-col gap-3.5">
+              {eyebrow && (
+                <p className="m-0 font-mono text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-accent-deep)]">
+                  {eyebrow}
+                </p>
+              )}
+              {heading && (
+                <h2 className="font-heading m-0 text-[clamp(2.25rem,4.6vw,3.25rem)] font-medium leading-[1.02] tracking-[-0.02em] text-[var(--color-secondary)]">
+                  {heading}
+                </h2>
+              )}
+            </div>
+            {lede && (
+              <p className="m-0 max-w-[40ch] text-base leading-relaxed text-[var(--color-foreground)]/75">
+                {lede}
+              </p>
+            )}
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-6">
+          {items.map((item, i) => {
+            const dark = i % 4 === 0
+            const wide = i < 2
+            const span = wide ? 'md:col-span-3' : 'md:col-span-2'
+            const label = item.ctaLabel || ctaLabel
+            const card = (
+              <>
+                <div>
+                  <span
+                    className={`font-mono text-xs tracking-[0.14em] ${
+                      dark ? 'text-[var(--color-accent)]' : 'text-[var(--color-accent-deep)]'
+                    }`}
+                  >
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h3
+                    className={`font-heading mb-2 mt-3 text-[28px] font-medium leading-[1.1] tracking-[-0.02em] ${
+                      dark ? '' : 'text-[var(--color-secondary)]'
+                    }`}
+                  >
+                    {item.title}
+                  </h3>
+                  <p
+                    className={`m-0 text-[15.5px] leading-[1.55] ${
+                      dark ? 'opacity-80' : 'text-[var(--color-foreground)]/75'
+                    }`}
+                  >
+                    {item.body}
+                  </p>
+                </div>
+                {item.href && (
+                  <span
+                    className={`mt-6 flex items-center gap-2 text-sm font-semibold ${
+                      dark ? 'text-[var(--color-accent)]' : 'text-[var(--color-primary)]'
+                    }`}
+                  >
+                    {label}
+                    {/* Long per-service labels wrap on the 2-col cards and on
+                        phones; the arrow then floats detached, so it only
+                        shows on the 3-col cards from md up. */}
+                    {wide && (
+                      <ArrowRight className="hidden h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1 md:block" />
+                    )}
+                  </span>
+                )}
+              </>
+            )
+            const className = `group flex min-h-[300px] flex-col justify-between rounded-[12px] p-8 transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(20,26,23,.12)] ${span} ${
+              dark
+                ? 'bg-[var(--color-primary)] text-[var(--color-primary-foreground)]'
+                : 'border border-[var(--color-border)] bg-white text-[var(--color-foreground)]'
+            }`
+            return item.href ? (
+              <Link key={i} href={item.href} className={className}>
+                {card}
+              </Link>
+            ) : (
+              <div key={i} className={className}>
+                {card}
               </div>
             )
           })}

@@ -9,6 +9,12 @@ import { cn } from '@/lib/utils'
 import type { BlockProps, MediaTextContent } from './types'
 
 /**
+ * Variants:
+ *   default — copy and media split, with optional scroll reveal (below)
+ *   band    — full-bleed dark split: duotone photo left fading into the
+ *             secondary colour, copy right with eyebrow, headline, body,
+ *             round headshots (content.people), and a text link
+ *
  * Copy and media split, with optional scroll reveal.
  *
  * Merges the old image_text and scroll_reveal blocks — they differed only in
@@ -20,6 +26,7 @@ import type { BlockProps, MediaTextContent } from './types'
  */
 export function MediaTextBlock({
   content,
+  variant = 'default',
   embedded = false,
 }: BlockProps<MediaTextContent>) {
   const {
@@ -32,6 +39,7 @@ export function MediaTextBlock({
     tags,
     cta,
     reveal = false,
+    people,
   } = content
 
   const [isVisible, setIsVisible] = useState(!reveal)
@@ -67,6 +75,94 @@ export function MediaTextBlock({
   }, [reveal])
 
   if (!image && !heading) return null
+
+  if (variant === 'band') {
+    return (
+      <section className="grain relative overflow-hidden bg-[var(--color-secondary)] text-[var(--color-secondary-foreground)]">
+        <div className="flex flex-wrap items-stretch">
+          {image && (
+            <div className="relative min-h-[320px] flex-[1_1_520px] overflow-hidden md:min-h-[560px]">
+              <Image
+                src={image}
+                alt={imageAlt || ''}
+                fill
+                className="object-cover"
+                style={{
+                  filter:
+                    'grayscale(1) contrast(1.05) sepia(.35) hue-rotate(95deg) saturate(.9) brightness(.9)',
+                }}
+                sizes="(max-width: 1040px) 100vw, 50vw"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0"
+                style={{
+                  background:
+                    'linear-gradient(90deg, transparent 55%, var(--color-secondary) 100%), linear-gradient(0deg, color-mix(in srgb, var(--color-secondary) 60%, transparent), transparent 50%)',
+                }}
+              />
+            </div>
+          )}
+
+          <div className="flex flex-[1_1_520px] flex-col justify-center gap-7 px-5 py-16 md:px-16 md:py-24">
+            {eyebrow && (
+              <p className="m-0 font-mono text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-accent)]">
+                {eyebrow}
+              </p>
+            )}
+            {heading && (
+              <h2 className="font-heading m-0 max-w-[18ch] text-[clamp(2rem,4.2vw,3rem)] font-medium leading-[1.04] tracking-[-0.02em]">
+                {heading}
+              </h2>
+            )}
+            {body && (
+              <p className="m-0 max-w-[52ch] whitespace-pre-line text-[17px] leading-relaxed text-[var(--color-secondary-foreground)]/75">
+                {body}
+              </p>
+            )}
+            {people && people.length > 0 && (
+              <ul className="m-0 mt-2 flex list-none flex-wrap gap-7 p-0">
+                {people.map((person) => (
+                  <li key={person.name} className="flex items-center gap-3">
+                    {person.image && (
+                      <Image
+                        src={person.image}
+                        alt=""
+                        width={44}
+                        height={44}
+                        className="h-11 w-11 rounded-full object-cover"
+                        style={{
+                          objectPosition: person.imagePosition,
+                          boxShadow: '0 0 0 2px var(--color-accent)',
+                        }}
+                      />
+                    )}
+                    <div>
+                      <div className="text-[15px] font-semibold">{person.name}</div>
+                      {person.role && (
+                        <div className="text-[13px] text-[var(--color-secondary-foreground)]/60">
+                          {person.role}
+                        </div>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {cta && (
+              <Link
+                href={cta.href}
+                className="group inline-flex items-center gap-2 text-[15px] font-semibold text-[var(--color-accent)]"
+              >
+                {cta.label}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            )}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   const isRight = imagePosition === 'right'
 

@@ -83,7 +83,7 @@ export function FeatureIndexBlock({
   return (
     <section
       ref={sectionRef}
-      className="mx-auto w-full max-w-[1200px] px-6 py-20 md:py-28"
+      className="mx-auto w-full max-w-[1200px] px-6 py-20 md:px-10 md:py-28"
       aria-label={content?.heading ?? "Services index"}
     >
       {/* Section header: small-caps eyebrow rule + heading */}
