@@ -251,6 +251,16 @@ export interface MediaTextContent {
   cta?: CtaLink
   /** Fade and slide in on scroll. */
   reveal?: boolean
+  /** band variant: small round headshots under the copy. */
+  people?: MediaTextPerson[]
+}
+
+export interface MediaTextPerson {
+  name: string
+  role?: string
+  image?: string
+  /** CSS object-position for the round crop. */
+  imagePosition?: string
 }
 
 // ── Quick facts ──────────────────────────────────────────────────────────────
