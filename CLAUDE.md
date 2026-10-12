@@ -40,7 +40,7 @@ Env vars used: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` (publ
   - theme: `update public.site_settings set theme = (theme || (theme->'draft')) - 'draft' where id = true returning id;`
   - footer: `update public.site_settings set footer = (footer || (footer->'draft')) - 'draft' where id = true returning id;`
   - section: `update public.sections set variant = coalesce(content->'draft'->>'variant', variant), content = (content || ((content->'draft') - 'variant')) - 'draft' where id = '…' returning id;`
-- Fonts are the one hard-coded thing (`app/layout.tsx`, `next/font`); theme `fontHeading`/`fontBody` name families loaded there. Fraunces' optical sizing draws the 8 top-heavy at display size (the "upside-down 8") — big numerals go in the mono.
+- Fonts are the one hard-coded thing (`app/layout.tsx`, `next/font`); theme `fontHeading`/`fontBody` name families loaded there. Fraunces' optical sizing draws the 8 top-heavy at display size (the "upside-down 8") — big numerals go in the mono. Set fonts with `font-heading` / `font-mono` / `font-sans` classes, never `font-[var(--font-…)]` (Tailwind v4 compiles that to `font-weight`).
 
 ## Block types in the registry
 
