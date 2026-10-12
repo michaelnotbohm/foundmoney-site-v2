@@ -82,10 +82,16 @@ export interface PathCard {
    * of a portrait in frame. Defaults to centered.
    */
   imagePosition?: string
+  /** portrait variant: short mono line under the name, e.g. 'Co-Founder'. */
+  role?: string
 }
 
 export interface PathCardsContent {
+  /** Small mono label above the heading (portrait variant). */
+  eyebrow?: string
   heading?: string
+  /** Paragraph opposite the heading (portrait variant). */
+  intro?: string
   cards: PathCard[]
   /** Link text on each card. Defaults to 'Learn more'. */
   ctaLabel?: string
