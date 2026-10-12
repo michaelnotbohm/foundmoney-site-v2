@@ -321,6 +321,8 @@ export interface ScanColumn {
 export interface ScanRevealContent {
   eyebrow?: string
   heading?: string
+  /** Paragraph in the right-hand column of the header. */
+  intro?: string
   /** Sits beside the running count, e.g. "sources of unclaimed revenue". */
   tallyLabel?: string
   replayLabel?: string
