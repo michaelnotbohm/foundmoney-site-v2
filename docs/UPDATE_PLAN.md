@@ -89,6 +89,10 @@ Lines on the home page (staged as drafts for the Ledger redesign, PR #5) that ar
 | Partners intro | `bcc06675` | Wall Street, finance, business development, investor relations, sales, digital marketing, and brand positioning. You work directly with the founders, not a rotating account team. |
 | Process header | `9bd68b64` | Eyebrow "How it works", heading "Four steps. Starts with a conversation, not a pitch." |
 
+| Case studies, section eyebrows | `6962a789`, `2cea5f0f` (results cards, PR #6) | "Sample of successes" / "More ways it shows up" |
+| Case studies, metric labels | same | "$50k" - "program sale from one outreach sequence" *(the "one outreach sequence" detail is not in his PDF; confirm or drop)*; "47.5%" - "open rate, 433 contacts in 8 weeks"; "$200k" - "in sales, first 30 days" |
+| What we do intro | `0d184bb7` (stack, PR #6) | Every engagement starts with an audit of what you already have. Then we pick the levers that fit, not a package. |
+
 Anthony's own words in the same drafts (no review needed): the band body (his company blurb, verbatim), the service link labels (his per-service CTA labels), all scan-reveal columns, stats, service and process bodies.
 
 ## Phase 5 — Optional code work (only if time allows before launch)
