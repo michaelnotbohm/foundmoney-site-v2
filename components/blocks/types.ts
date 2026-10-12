@@ -131,8 +131,12 @@ export interface FeatureItem {
   title: string
   body: string
   href?: string
-  /** Link text for this item (bento variant). Falls back to content.ctaLabel. */
+  /** Link text for this item (bento, stack). Falls back to content.ctaLabel. */
   ctaLabel?: string
+  /** results variant: headline figure, e.g. '$50k'. Its card goes on the primary colour. */
+  metric?: string
+  /** results variant: short line under the metric. */
+  metricLabel?: string
 }
 
 export interface FeatureGridContent {
@@ -144,6 +148,8 @@ export interface FeatureGridContent {
   items: FeatureItem[]
   /** Default link text when an item has no ctaLabel. */
   ctaLabel?: string
+  /** stack variant: pill button under the sticky header. */
+  cta?: CtaLink
 }
 
 // ── Testimonials ─────────────────────────────────────────────────────────────
