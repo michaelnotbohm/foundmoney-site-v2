@@ -284,6 +284,8 @@ export interface ProcessStep {
 }
 
 export interface ProcessTimelineContent {
+  /** Small mono label above the heading (columns variant). */
+  eyebrow?: string
   heading?: string
   intro?: string
   steps: ProcessStep[]
