@@ -94,7 +94,7 @@ export function SiteNav({ site, navLinks, cta, centered = false }: SiteNavProps)
   )
 
   const desktopLinks = (
-    <div className="hidden md:flex md:items-center md:gap-6 lg:gap-8">
+    <div className="hidden lg:flex lg:items-center lg:gap-8">
       {links.map((link) => (
         <NavItem
           key={link.href}
@@ -108,7 +108,7 @@ export function SiteNav({ site, navLinks, cta, centered = false }: SiteNavProps)
   )
 
   const desktopCta = (
-    <div className="hidden md:flex md:items-center md:gap-3">
+    <div className="hidden lg:flex lg:items-center lg:gap-3">
       {primaryCta && (
         <Link
           href={primaryCta.href}
@@ -123,7 +123,7 @@ export function SiteNav({ site, navLinks, cta, centered = false }: SiteNavProps)
 
   const mobileTrigger = (
     <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-      <SheetTrigger asChild className="md:hidden">
+      <SheetTrigger asChild className="lg:hidden">
         <Button variant="ghost" size="icon">
           <Menu className="h-5 w-5" />
           <span className="sr-only">Open menu</span>
