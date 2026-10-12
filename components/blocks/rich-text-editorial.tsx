@@ -9,7 +9,8 @@ import { EditorialRail, type EditorialChapterLink } from './editorial-rail'
 //   - everything before the first H2 is the lede (first paragraph in display)
 //   - each H2 starts a chapter: mono index + hairline, Fraunces H2, 68ch body,
 //     full-bleed bands alternating background / surface
-//   - a paragraph that is entirely bold becomes a pull line
+//   - the first entirely-bold paragraph in the lede and in each chapter
+//     becomes a pull line; later ones render as inline emphasis
 //   - a list whose every item opens with a bold label ("**Label:** text")
 //     becomes ruled rows; other lists get accent dot markers
 //   - xl+: a sticky rail listing the chapters, with a booking pill
@@ -108,9 +109,59 @@ function firstParagraphLine(md: string): number | null {
   return /^\s*([-*+]\s|\d+[.)]\s|#|>|```|~~~|\|)/.test(lines[i]) ? null : i + 1
 }
 
+/**
+ * Line (1-based) where the first entirely-bold paragraph starts, or null.
+ * Paragraph = run of non-blank lines that isn't a list, heading, quote,
+ * table or fenced code. "Entirely bold" = one **...** or __...__ span. A bold
+ * paragraph right after an H2 is the chapter's first block, so it is always
+ * the one chosen.
+ */
+export function firstAllBoldLine(md: string): number | null {
+  const lines = md.split('\n')
+  let inFence = false
+  let start = -1
+  const block: string[] = []
+  const check = () => {
+    const text = block.join(' ').trim()
+    const bold = /^(\*\*|__)(?:(?!\1).)+\1$/.test(text)
+    block.length = 0
+    return bold
+  }
+  for (let i = 0; i <= lines.length; i++) {
+    const line = i < lines.length ? lines[i] : ''
+    if (/^\s*(```|~~~)/.test(line)) {
+      inFence = !inFence
+      block.length = 0
+      start = -1
+      continue
+    }
+    if (inFence) continue
+    if (!line.trim()) {
+      if (block.length && check()) return start + 1
+      start = -1
+      continue
+    }
+    if (block.length === 0) {
+      if (/^\s*([-*+]\s|\d+[.)]\s|#|>|\|)/.test(line)) continue
+      start = i
+    }
+    block.push(line)
+  }
+  return null
+}
+
 // ── Shared element renderers ────────────────────────────────────────────────
 
-/** An entirely-bold paragraph: display pull line with an accent rule. */
+/** Inline emphasis for later all-bold paragraphs: still bold, not a layout event. */
+function BoldLine({ children }: { children?: ReactNode }) {
+  return (
+    <p className="mb-6 text-[19px] font-semibold leading-[1.65] text-[var(--color-primary)] [&_strong]:font-semibold [&_strong]:text-inherit">
+      {children}
+    </p>
+  )
+}
+
+/** The first all-bold paragraph of a chunk: display pull line with an accent rule. */
 function PullLine({ children }: { children?: ReactNode }) {
   return (
     <p className="font-heading my-12 border-l-2 border-[var(--color-accent-deep)] pl-6 text-2xl font-medium leading-[1.3] tracking-[-0.01em] text-[var(--color-primary)] [&_strong]:font-medium [&_strong]:text-inherit">
@@ -119,7 +170,7 @@ function PullLine({ children }: { children?: ReactNode }) {
   )
 }
 
-function proseComponents(): Components {
+function proseComponents(pullLine: number | null): Components {
   return {
     h3: ({ children }) => (
       <h3 className="font-heading mb-4 mt-12 text-[26px] font-medium leading-tight tracking-[-0.02em] text-[var(--color-secondary)]">
@@ -131,12 +182,19 @@ function proseComponents(): Components {
         {children}
       </h4>
     ),
-    p: ({ node, children }) =>
-      isAllBold(node as HastNode) ? (
-        <PullLine>{children}</PullLine>
-      ) : (
+    p: ({ node, children }) => {
+      const n = node as HastNode
+      if (isAllBold(n)) {
+        return n.position?.start.line === pullLine ? (
+          <PullLine>{children}</PullLine>
+        ) : (
+          <BoldLine>{children}</BoldLine>
+        )
+      }
+      return (
         <p className="mb-6 text-lg leading-[1.75] text-[var(--color-foreground)]/85">{children}</p>
-      ),
+      )
+    },
     strong: ({ children }) => (
       <strong className="font-semibold text-[var(--color-foreground)]">{children}</strong>
     ),
@@ -232,11 +290,12 @@ export function EditorialRichText({
   bookingHref?: string
 }) {
   const { lede, chapters } = splitChapters(markdown)
-  const prose = proseComponents()
   const leadLine = lede ? firstParagraphLine(lede) : null
+  const ledePull = lede ? firstAllBoldLine(lede) : null
+  const ledeProse = proseComponents(ledePull)
 
   const ledeComponents: Components = {
-    ...prose,
+    ...ledeProse,
     p: ({ node, children }) => {
       const n = node as HastNode
       if (leadLine !== null && n.position?.start.line === leadLine) {
@@ -246,7 +305,13 @@ export function EditorialRichText({
           </p>
         )
       }
-      if (isAllBold(n)) return <PullLine>{children}</PullLine>
+      if (isAllBold(n)) {
+        return n.position?.start.line === ledePull ? (
+          <PullLine>{children}</PullLine>
+        ) : (
+          <BoldLine>{children}</BoldLine>
+        )
+      }
       return (
         <p className="mb-5 text-[20px] leading-[1.7] text-[var(--color-foreground)]/85 md:text-[21px]">
           {children}
@@ -291,7 +356,11 @@ export function EditorialRichText({
               >
                 {chapter.title}
               </h2>
-              {chapter.body && <ReactMarkdown components={prose}>{chapter.body}</ReactMarkdown>}
+              {chapter.body && (
+                <ReactMarkdown components={proseComponents(firstAllBoldLine(chapter.body))}>
+                  {chapter.body}
+                </ReactMarkdown>
+              )}
             </div>
           </div>
         </section>
