@@ -69,7 +69,7 @@ export function LeadFormBlock({ content }: BlockProps<LeadFormContent>) {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-md text-center">
             <CheckCircle className="mx-auto mb-4 h-16 w-16 text-[var(--color-primary)]" />
-            <h2 className="mb-2 font-[var(--font-heading)] text-2xl font-bold text-[var(--color-foreground)]">
+            <h2 className="mb-2 font-heading text-2xl font-bold text-[var(--color-foreground)]">
               {successHeading}
             </h2>
             <p className="text-[var(--color-muted)]">{successBody}</p>
@@ -86,7 +86,7 @@ export function LeadFormBlock({ content }: BlockProps<LeadFormContent>) {
           {(heading || subheading) && (
             <div className="mb-8 text-center">
               {heading && (
-                <h2 className="mb-2 font-[var(--font-heading)] text-3xl font-bold text-[var(--color-foreground)]">
+                <h2 className="mb-2 font-heading text-3xl font-bold text-[var(--color-foreground)]">
                   {heading}
                 </h2>
               )}

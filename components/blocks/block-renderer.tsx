@@ -8,10 +8,13 @@
 // development that now logs loudly, so the registry is the first thing you
 // check rather than the last. Production stays silent: a half-rendered page
 // beats a crashed one.
+//
+// content.draft (and a draft variant) applies off production; see lib/draft.ts.
 
 import type { SiteSettings } from '@/lib/types/database'
 import type { Section } from './types'
 import { getBlockComponent } from './registry'
+import { resolveSectionDraft } from '@/lib/draft'
 
 interface BlockRendererProps {
   sections: Section[]
@@ -35,12 +38,17 @@ export function BlockRenderer({ sections, site }: BlockRendererProps) {
           return null
         }
 
+        const { variant, content } = resolveSectionDraft(
+          section.variant,
+          section.content as Record<string, unknown>,
+        )
+
         return (
           <Component
             key={section.id}
-            content={section.content}
+            content={content}
             site={site}
-            variant={section.variant}
+            variant={variant}
           />
         )
       })}

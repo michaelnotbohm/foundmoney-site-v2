@@ -29,7 +29,7 @@ export function StatStripBlock({
     <div className="mx-auto mb-12 max-w-2xl text-center">
       {eyebrow && (
         <p
-          className={`mb-3 text-sm font-semibold uppercase tracking-[0.2em] ${
+          className={`mb-3 font-mono text-xs font-medium uppercase tracking-[0.18em] ${
             asCards
               ? 'text-[var(--color-primary)]'
               : 'text-[var(--color-secondary-foreground)]/60'
@@ -40,7 +40,7 @@ export function StatStripBlock({
       )}
       {heading && (
         <h2
-          className={`font-[var(--font-heading)] text-3xl font-bold tracking-tight md:text-4xl ${
+          className={`font-heading text-3xl font-bold tracking-tight md:text-4xl ${
             asCards
               ? 'text-[var(--color-secondary)]'
               : 'text-[var(--color-secondary-foreground)]'
@@ -153,7 +153,7 @@ function StatItem({
 
   const value = (
     <div
-      className={`font-[var(--font-heading)] font-bold leading-tight ${
+      className={`font-heading-num font-bold leading-tight ${
         asCards
           ? 'text-3xl text-[var(--color-primary)] md:text-4xl'
           : 'mb-2 break-words text-2xl text-[var(--color-secondary-foreground)] sm:text-3xl md:text-4xl lg:text-5xl'

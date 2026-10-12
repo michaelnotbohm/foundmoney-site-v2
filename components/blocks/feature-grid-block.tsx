@@ -73,7 +73,7 @@ export function FeatureGridBlock({
         <div className="container mx-auto px-4">
           <div className="mx-auto mb-12 max-w-2xl text-center">
             {heading && (
-              <h2 className="mb-4 font-[var(--font-heading)] text-3xl font-bold text-[var(--color-secondary)] md:text-4xl">
+              <h2 className="mb-4 font-heading text-3xl font-bold text-[var(--color-secondary)] md:text-4xl">
                 {heading}
               </h2>
             )}
@@ -91,9 +91,9 @@ export function FeatureGridBlock({
                 <div key={index} className="flex flex-col">
                   <div className="mb-3 flex items-center gap-3">
                     {Icon && (
-                      <Icon className="h-6 w-6 shrink-0 text-[var(--color-accent)]" />
+                      <Icon className="h-6 w-6 shrink-0 text-[var(--color-accent-deep)]" />
                     )}
-                    <h3 className="font-[var(--font-heading)] text-lg font-bold text-[var(--color-secondary)]">
+                    <h3 className="font-heading text-lg font-bold text-[var(--color-secondary)]">
                       {item.title}
                     </h3>
                   </div>
@@ -115,7 +115,7 @@ export function FeatureGridBlock({
         {(heading || subheading) && (
           <div className="mb-12 text-center">
             {heading && (
-              <h2 className="mb-4 font-[var(--font-heading)] text-3xl font-bold text-[var(--color-foreground)] md:text-4xl">
+              <h2 className="mb-4 font-heading text-3xl font-bold text-[var(--color-foreground)] md:text-4xl">
                 {heading}
               </h2>
             )}
@@ -141,7 +141,7 @@ export function FeatureGridBlock({
                     <Icon className="h-6 w-6 text-[var(--color-primary)]" />
                   </div>
                 )}
-                <h3 className="mb-2 font-[var(--font-heading)] text-xl font-semibold text-[var(--color-foreground)]">
+                <h3 className="mb-2 font-heading text-xl font-semibold text-[var(--color-foreground)]">
                   {item.title}
                 </h3>
                 <p className="mb-4 leading-relaxed text-[var(--color-muted)]">

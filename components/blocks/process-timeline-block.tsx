@@ -13,7 +13,7 @@ export function ProcessTimelineBlock({
       {(heading || intro) && (
         <div className="mx-auto mb-12 max-w-2xl text-center">
           {heading && (
-            <h2 className="font-[var(--font-heading)] text-3xl font-bold text-[var(--color-secondary)] md:text-4xl">
+            <h2 className="font-heading text-3xl font-bold text-[var(--color-secondary)] md:text-4xl">
               {heading}
             </h2>
           )}
@@ -34,11 +34,11 @@ export function ProcessTimelineBlock({
                 aria-hidden="true"
               />
             )}
-            <div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)] font-[var(--font-heading)] text-lg font-bold text-[var(--color-primary-foreground)]">
+            <div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)] font-heading text-lg font-bold text-[var(--color-primary-foreground)]">
               {i + 1}
             </div>
             <div className="pt-1.5">
-              <h3 className="font-[var(--font-heading)] text-xl font-bold text-[var(--color-secondary)]">
+              <h3 className="font-heading text-xl font-bold text-[var(--color-secondary)]">
                 {step.title}
               </h3>
               <p className="mt-2 leading-relaxed text-[var(--color-foreground)]/70">

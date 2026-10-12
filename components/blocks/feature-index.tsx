@@ -40,12 +40,14 @@ type FeatureIndexContent = {
   items?: FeatureIndexItem[];
 };
 
+// Theme variables (set by ThemeWrapper from site_settings.theme). The bare
+// --foreground/--muted/--accent names are shadcn fallbacks, not the theme.
 const tokens = {
-  foreground: "var(--foreground, #1B241F)",
-  muted: "var(--muted, #6F6E60)",
-  accent: "var(--accent, #B08A3F)",
-  surface: "var(--surface, #F1EDE1)",
-  border: "var(--border, #DAD3C1)",
+  foreground: "var(--color-foreground, #141A17)",
+  muted: "var(--color-muted, #6B7069)",
+  accent: "var(--color-accent-deep, var(--color-accent, #B08A3F))",
+  surface: "var(--color-surface, #F2EDE2)",
+  border: "var(--color-border, #E6DFCF)",
   fontHeading: "var(--font-heading, 'Fraunces', serif)",
 };
 

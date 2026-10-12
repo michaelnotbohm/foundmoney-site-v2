@@ -102,13 +102,13 @@ export function MediaTextBlock({
       )}
     >
       {eyebrow && (
-        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">
+        <p className="mb-3 font-mono text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-primary)]">
           {eyebrow}
         </p>
       )}
 
       {heading && (
-        <h2 className="font-[var(--font-heading)] text-3xl font-bold tracking-tight text-[var(--color-secondary)] md:text-4xl">
+        <h2 className="font-heading text-3xl font-bold tracking-tight text-[var(--color-secondary)] md:text-4xl">
           {heading}
         </h2>
       )}

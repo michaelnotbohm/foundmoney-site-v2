@@ -21,18 +21,18 @@ export function RichTextBlock({
         components={{
           h2: ({ children }) => (
             <h2
-              className={`mb-8 font-[var(--font-heading)] text-4xl font-bold tracking-tight text-[var(--color-secondary)] md:text-5xl ${headingAlign}`}
+              className={`mb-8 font-heading text-4xl font-bold tracking-tight text-[var(--color-secondary)] md:text-5xl ${headingAlign}`}
             >
               {children}
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="mb-4 mt-10 font-[var(--font-heading)] text-2xl font-semibold tracking-tight text-[var(--color-secondary)]">
+            <h3 className="mb-4 mt-10 font-heading text-2xl font-semibold tracking-tight text-[var(--color-secondary)]">
               {children}
             </h3>
           ),
           h4: ({ children }) => (
-            <h4 className="mb-3 mt-8 font-[var(--font-heading)] text-xl font-semibold text-[var(--color-secondary)]">
+            <h4 className="mb-3 mt-8 font-heading text-xl font-semibold text-[var(--color-secondary)]">
               {children}
             </h4>
           ),

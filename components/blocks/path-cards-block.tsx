@@ -18,13 +18,13 @@ export function PathCardsBlock({
   const cardRadius = { borderRadius: 'calc(var(--radius) * 2)' }
 
   const sectionHeading = heading && (
-    <h2 className="mb-12 text-center font-[var(--font-heading)] text-3xl font-semibold tracking-tight text-[var(--color-secondary)] md:text-4xl">
+    <h2 className="mb-12 text-center font-heading text-3xl font-semibold tracking-tight text-[var(--color-secondary)] md:text-4xl">
       {heading}
     </h2>
   )
 
   const cardLink = (
-    <span className="inline-flex items-center text-sm font-semibold text-[var(--color-accent)] group-hover:underline">
+    <span className="inline-flex items-center text-sm font-semibold text-[var(--color-accent-deep)] group-hover:underline">
       {ctaLabel}
       <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
     </span>
@@ -43,7 +43,7 @@ export function PathCardsBlock({
                 className="group flex flex-col items-center border border-[var(--color-border)] bg-[var(--color-background)] p-8 text-center shadow-sm transition-shadow hover:shadow-md"
                 style={cardRadius}
               >
-                <h3 className="mb-3 font-[var(--font-heading)] text-2xl font-bold text-[var(--color-secondary)] md:text-3xl">
+                <h3 className="mb-3 font-heading text-2xl font-bold text-[var(--color-secondary)] md:text-3xl">
                   {card.label}
                 </h3>
                 {card.description && (
@@ -73,7 +73,7 @@ export function PathCardsBlock({
                 className="group flex flex-col border border-[var(--color-border)] bg-[var(--color-background)] p-7 shadow-lg transition-shadow hover:shadow-xl"
                 style={cardRadius}
               >
-                <h3 className="mb-2 font-[var(--font-heading)] text-xl font-bold text-[var(--color-secondary)]">
+                <h3 className="mb-2 font-heading text-xl font-bold text-[var(--color-secondary)]">
                   {card.label}
                 </h3>
                 {card.description && (
@@ -116,7 +116,7 @@ export function PathCardsBlock({
                   )}
                 </div>
                 <div className="flex flex-1 flex-col p-6">
-                  <h3 className="mb-2 font-[var(--font-heading)] text-xl font-bold text-[var(--color-secondary)]">
+                  <h3 className="mb-2 font-heading text-xl font-bold text-[var(--color-secondary)]">
                     {card.label}
                   </h3>
                   {card.description && (
@@ -158,7 +158,7 @@ export function PathCardsBlock({
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
               <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
-                <h3 className="mb-2 font-[var(--font-heading)] text-2xl font-bold">
+                <h3 className="mb-2 font-heading text-2xl font-bold">
                   {card.label}
                 </h3>
                 {card.description && (

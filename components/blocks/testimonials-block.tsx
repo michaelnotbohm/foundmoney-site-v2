@@ -21,7 +21,7 @@ function Stars({ rating }: { rating?: number }) {
           key={i}
           className={
             i < rating
-              ? 'h-4 w-4 fill-[var(--color-accent)] text-[var(--color-accent)]'
+              ? 'h-4 w-4 fill-[var(--color-accent-deep)] text-[var(--color-accent-deep)]'
               : 'h-4 w-4 text-[var(--color-border)]'
           }
         />
@@ -92,7 +92,7 @@ export function TestimonialsBlock({
   const grid = (
     <>
       {heading && (
-        <h2 className="mb-12 text-center font-[var(--font-heading)] text-3xl font-semibold tracking-tight text-[var(--color-secondary)] md:text-4xl">
+        <h2 className="mb-12 text-center font-heading text-3xl font-semibold tracking-tight text-[var(--color-secondary)] md:text-4xl">
           {heading}
         </h2>
       )}
@@ -165,7 +165,7 @@ function TestimonialsCarousel({
   const inner = (
     <>
       {heading && (
-        <h2 className="mb-12 text-center font-[var(--font-heading)] text-3xl font-semibold tracking-tight text-[var(--color-secondary)] md:text-4xl">
+        <h2 className="mb-12 text-center font-heading text-3xl font-semibold tracking-tight text-[var(--color-secondary)] md:text-4xl">
           {heading}
         </h2>
       )}

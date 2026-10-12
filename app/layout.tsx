@@ -9,13 +9,13 @@
 // which of these the CSS variables point at.
 
 import type { Metadata } from 'next'
-import { Fraunces, Inter, Geist_Mono } from 'next/font/google'
+import { Fraunces, Instrument_Sans, IBM_Plex_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { getSite } from '@/lib/site'
 import { rootMetadata } from '@/lib/seo'
 import './globals.css'
 
-const inter = Inter({
+const instrumentSans = Instrument_Sans({
   subsets: ['latin'],
   variable: '--font-sans',
   display: 'swap',
@@ -28,8 +28,10 @@ const fraunces = Fraunces({
   axes: ['opsz'],
 })
 
-const geistMono = Geist_Mono({
+// Plex Mono is not a variable font, so the weights are listed.
+const plexMono = IBM_Plex_Mono({
   subsets: ['latin'],
+  weight: ['400', '500', '600'],
   variable: '--font-mono',
   display: 'swap',
 })
@@ -57,7 +59,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} ${geistMono.variable}`}
+      className={`${instrumentSans.variable} ${fraunces.variable} ${plexMono.variable}`}
     >
       <body className="font-sans antialiased">
         {children}

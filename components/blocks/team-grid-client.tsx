@@ -53,7 +53,7 @@ export function TeamGridClient({
         {(heading || subheading) && (
           <div className="mb-12 text-center">
             {heading && (
-              <h2 className="mb-4 font-[var(--font-heading)] text-3xl font-bold text-[var(--color-secondary)] md:text-4xl">
+              <h2 className="mb-4 font-heading text-3xl font-bold text-[var(--color-secondary)] md:text-4xl">
                 {heading}
               </h2>
             )}
@@ -87,7 +87,7 @@ export function TeamGridClient({
                 )}
               </div>
               <div className="p-5">
-                <h3 className="font-[var(--font-heading)] text-lg font-bold text-[var(--color-secondary)]">
+                <h3 className="font-heading text-lg font-bold text-[var(--color-secondary)]">
                   {member.name}
                 </h3>
                 {member.title && (
@@ -139,7 +139,7 @@ export function TeamGridClient({
             )}
 
             <div className="p-6 md:p-8">
-              <h3 className="font-[var(--font-heading)] text-2xl font-bold text-[var(--color-secondary)]">
+              <h3 className="font-heading text-2xl font-bold text-[var(--color-secondary)]">
                 {selected.name}
               </h3>
               {selected.title && (

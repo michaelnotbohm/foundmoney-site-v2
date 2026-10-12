@@ -21,6 +21,8 @@ export interface SiteTheme {
   secondaryForeground?: string
   accent?: string
   accentForeground?: string
+  /** Darker accent for text, numerals, and icons on light grounds. Falls back to accent. */
+  accentDeep?: string
   background?: string
   surface?: string
   foreground?: string
@@ -31,6 +33,15 @@ export interface SiteTheme {
   fontBody?: string
   radius?: string
   radiusButton?: string
+  /** Page chrome: 'inset' (default) draws the bordered frame, 'none' is full-bleed. */
+  frame?: 'inset' | 'none'
+  /**
+   * Staged tokens, applied over the live ones on every deployment except
+   * Vercel production. Lets a redesign be reviewed on a preview URL against
+   * the shared database without changing the live site. Promote by merging
+   * draft into the top level and removing the key.
+   */
+  draft?: Omit<SiteTheme, 'draft'>
 }
 
 // ── Navigation ───────────────────────────────────────────────────────────────
@@ -59,6 +70,8 @@ export interface FooterColumn {
 export interface SiteFooterConfig {
   columns?: FooterColumn[]
   legal?: string
+  /** One-line description under the footer wordmark. Falls back to site.tagline. */
+  blurb?: string
 }
 
 // ── Site settings ────────────────────────────────────────────────────────────
