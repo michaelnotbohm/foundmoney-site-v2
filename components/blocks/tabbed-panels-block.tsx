@@ -71,7 +71,7 @@ export function TabbedPanelsBlock({ content }: BlockProps<TabbedPanelsContent>) 
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-5xl">
           {heading && (
-            <h2 className="mb-10 text-center font-[var(--font-heading)] text-3xl font-bold tracking-tight text-[var(--color-secondary)] md:text-4xl">
+            <h2 className="mb-10 text-center font-heading text-3xl font-bold tracking-tight text-[var(--color-secondary)] md:text-4xl">
               {heading}
             </h2>
           )}
@@ -105,7 +105,7 @@ export function TabbedPanelsBlock({ content }: BlockProps<TabbedPanelsContent>) 
                   >
                     <span
                       className={cn(
-                        'font-[var(--font-heading)] text-2xl font-bold',
+                        'font-heading text-2xl font-bold',
                         isActive
                           ? 'text-[var(--color-primary-foreground)]/80'
                           : 'text-[var(--color-primary)]',
@@ -123,7 +123,7 @@ export function TabbedPanelsBlock({ content }: BlockProps<TabbedPanelsContent>) 
               {current.kind === 'prose' && (
                 <div>
                   {current.heading && (
-                    <h3 className="mb-4 font-[var(--font-heading)] text-xl font-bold text-[var(--color-secondary)] md:text-2xl">
+                    <h3 className="mb-4 font-heading text-xl font-bold text-[var(--color-secondary)] md:text-2xl">
                       {current.heading}
                     </h3>
                   )}

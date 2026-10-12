@@ -79,12 +79,7 @@ export function SiteNav({ site, navLinks, cta, centered = false }: SiteNavProps)
         />
       ) : (
         <span
-          className="flex items-center gap-2.5 text-[22px] font-semibold text-[var(--color-secondary)]"
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontVariationSettings: "'opsz' 144",
-            letterSpacing: '-0.02em',
-          }}
+          className="font-heading flex items-center gap-2.5 text-[22px] font-semibold tracking-[-0.02em] text-[var(--color-secondary)]"
         >
           {/* Placeholder mark until a logo exists: primary disc, accent ring. */}
           <span

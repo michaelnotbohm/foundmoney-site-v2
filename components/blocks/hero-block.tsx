@@ -136,7 +136,7 @@ export function HeroBlock({
   const renderHeadline = (onDark: boolean, className?: string) => (
     <h1
       className={cn(
-        'font-[var(--font-heading)] font-bold tracking-tight',
+        'font-heading font-bold tracking-tight',
         onDark ? 'text-white' : 'text-[var(--color-foreground)]',
         className,
       )}
@@ -199,8 +199,7 @@ export function HeroBlock({
             )}
 
             <h1
-              className="rise rise-1 m-0 max-w-[15ch] font-[var(--font-heading)] text-[clamp(2.75rem,6vw,4.75rem)] font-medium leading-[0.98]"
-              style={{ fontVariationSettings: "'opsz' 144", letterSpacing: '-0.02em' }}
+              className="rise rise-1 m-0 max-w-[15ch] font-heading text-[clamp(2.75rem,6vw,4.75rem)] font-medium leading-[0.98] tracking-[-0.02em]"
             >
               {headline}
               {headlineAccent && (

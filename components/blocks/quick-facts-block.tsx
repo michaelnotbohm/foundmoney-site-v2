@@ -11,7 +11,7 @@ export function QuickFactsBlock({
   const inner = (
     <>
       {heading && (
-        <h2 className="mb-8 text-center font-[var(--font-heading)] text-2xl font-bold text-[var(--color-secondary)] md:text-3xl">
+        <h2 className="mb-8 text-center font-heading text-2xl font-bold text-[var(--color-secondary)] md:text-3xl">
           {heading}
         </h2>
       )}
@@ -22,7 +22,7 @@ export function QuickFactsBlock({
             className="border border-[var(--color-border)] bg-[var(--color-background)] p-6 text-center shadow-sm"
             style={{ borderRadius: 'calc(var(--radius) * 2)' }}
           >
-            <div className="font-[var(--font-heading)] text-3xl font-bold text-[var(--color-primary)] md:text-4xl">
+            <div className="font-heading text-3xl font-bold text-[var(--color-primary)] md:text-4xl">
               {fact.value}
             </div>
             <div className="mt-2 text-sm font-semibold text-[var(--color-secondary)]">

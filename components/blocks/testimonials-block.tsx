@@ -92,7 +92,7 @@ export function TestimonialsBlock({
   const grid = (
     <>
       {heading && (
-        <h2 className="mb-12 text-center font-[var(--font-heading)] text-3xl font-semibold tracking-tight text-[var(--color-secondary)] md:text-4xl">
+        <h2 className="mb-12 text-center font-heading text-3xl font-semibold tracking-tight text-[var(--color-secondary)] md:text-4xl">
           {heading}
         </h2>
       )}
@@ -165,7 +165,7 @@ function TestimonialsCarousel({
   const inner = (
     <>
       {heading && (
-        <h2 className="mb-12 text-center font-[var(--font-heading)] text-3xl font-semibold tracking-tight text-[var(--color-secondary)] md:text-4xl">
+        <h2 className="mb-12 text-center font-heading text-3xl font-semibold tracking-tight text-[var(--color-secondary)] md:text-4xl">
           {heading}
         </h2>
       )}

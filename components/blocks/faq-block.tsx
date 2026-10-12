@@ -54,7 +54,7 @@ export function FaqBlock({ content, variant = 'default' }: BlockProps<FaqContent
               </p>
             )}
             {heading && (
-              <h2 className="font-[var(--font-heading)] text-4xl font-bold tracking-tight text-[var(--color-secondary)] md:text-5xl">
+              <h2 className="font-heading text-4xl font-bold tracking-tight text-[var(--color-secondary)] md:text-5xl">
                 {heading}
               </h2>
             )}
@@ -66,7 +66,7 @@ export function FaqBlock({ content, variant = 'default' }: BlockProps<FaqContent
             <div key={group.heading || groupIndex}>
               {group.heading && (
                 <div className="mb-5">
-                  <h3 className="font-[var(--font-heading)] text-xl font-bold text-[var(--color-secondary)] md:text-2xl">
+                  <h3 className="font-heading text-xl font-bold text-[var(--color-secondary)] md:text-2xl">
                     {group.heading}
                   </h3>
                   {group.intro && (

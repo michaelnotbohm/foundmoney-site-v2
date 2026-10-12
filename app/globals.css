@@ -130,6 +130,15 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* Font-family utilities. Use these, not font-[var(--font-heading)]: Tailwind v4
+   reads an untyped font-[var(...)] as font-weight, so the family never applies.
+   With @theme inline, var(--font-heading) here resolves to the @theme stack at
+   build time, same as font-mono / font-sans. Fonts are code (app/layout.tsx). */
+@utility font-heading {
+  font-family: var(--font-heading, 'Fraunces'), Georgia, serif;
+  font-variation-settings: 'opsz' 144;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

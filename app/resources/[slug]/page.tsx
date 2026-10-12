@@ -126,7 +126,7 @@ export default async function ResourceSlugPage({ params }: RouteProps) {
                 </ol>
               </nav>
 
-              <h1 className="font-[var(--font-heading)] text-4xl font-bold tracking-tight text-[var(--color-foreground)] md:text-5xl">
+              <h1 className="font-heading text-4xl font-bold tracking-tight text-[var(--color-foreground)] md:text-5xl">
                 {category.name}
               </h1>
               {category.description && (
@@ -246,7 +246,7 @@ export default async function ResourceSlugPage({ params }: RouteProps) {
               </ol>
             </nav>
 
-            <h1 className="max-w-3xl font-[var(--font-heading)] text-4xl font-bold tracking-tight text-[var(--color-foreground)] md:text-5xl">
+            <h1 className="max-w-3xl font-heading text-4xl font-bold tracking-tight text-[var(--color-foreground)] md:text-5xl">
               {post.title}
             </h1>
 

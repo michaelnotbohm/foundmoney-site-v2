@@ -34,8 +34,7 @@ export function CtaBandBlock({ content }: BlockProps<CtaBandContent>) {
         )}
 
         <h2
-          className="m-0 max-w-[16ch] text-[clamp(2.5rem,6vw,4.25rem)] font-medium leading-[0.98]"
-          style={{ fontVariationSettings: "'opsz' 144", letterSpacing: '-0.02em' }}
+          className="font-heading m-0 max-w-[16ch] text-[clamp(2.5rem,6vw,4.25rem)] font-medium leading-[0.98] tracking-[-0.02em]"
         >
           {headline}
         </h2>

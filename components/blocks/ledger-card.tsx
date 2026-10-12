@@ -92,11 +92,7 @@ export function LedgerCard({
         >
           {title && (
             <span
-              className="text-xl font-semibold"
-              style={{
-                fontFamily: 'var(--font-heading)',
-                fontVariationSettings: "'opsz' 144",
-              }}
+              className="font-heading text-xl font-semibold"
             >
               {title}
             </span>

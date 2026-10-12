@@ -115,12 +115,7 @@ export function SiteFooter({ site }: SiteFooterProps) {
               />
             ) : (
               <span
-                className="text-[22px] font-semibold text-[var(--color-secondary-foreground)]"
-                style={{
-                  fontFamily: 'var(--font-heading)',
-                  fontVariationSettings: "'opsz' 144",
-                  letterSpacing: '-0.02em',
-                }}
+                className="font-heading text-[22px] font-semibold tracking-[-0.02em] text-[var(--color-secondary-foreground)]"
               >
                 {site.name}
               </span>

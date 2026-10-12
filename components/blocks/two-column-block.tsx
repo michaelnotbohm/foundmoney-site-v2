@@ -70,7 +70,7 @@ export function TwoColumnBlock({ content, site }: BlockProps<TwoColumnContent>) 
         {(heading || subheading) && (
           <div className="mx-auto mb-10 max-w-2xl text-center">
             {heading && (
-              <h2 className="font-[var(--font-heading)] text-3xl font-bold text-[var(--color-secondary)] md:text-4xl">
+              <h2 className="font-heading text-3xl font-bold text-[var(--color-secondary)] md:text-4xl">
                 {heading}
               </h2>
             )}

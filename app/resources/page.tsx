@@ -53,7 +53,7 @@ export default async function ResourcesPage() {
       <SiteShell site={site}>
         <section className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
           <div className="container mx-auto px-4 py-14 md:py-16">
-            <h1 className="font-[var(--font-heading)] text-4xl font-bold tracking-tight text-[var(--color-foreground)] md:text-5xl">
+            <h1 className="font-heading text-4xl font-bold tracking-tight text-[var(--color-foreground)] md:text-5xl">
               Resources
             </h1>
             {site.description && (
